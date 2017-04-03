@@ -24,8 +24,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        window.cpp
+        window.cpp \
+    publish.cpp \
+    client.cpp \
+    #utils.cpp
 
-HEADERS  += window.h
+HEADERS  += window.h \
+    publish.h \
+    client.h \
+   # utils.h
 
 FORMS    += window.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/release/ -lmosquitto.1.4.11
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/debug/ -lmosquitto.1.4.11
+else:unix: LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/ -lmosquitto.1.4.11
+
+INCLUDEPATH += $$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/include
+DEPENDPATH += $$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/release/ -lmosquittopp.1.4.11
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/debug/ -lmosquittopp.1.4.11
+else:unix: LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/ -lmosquittopp.1.4.11
+
+INCLUDEPATH += $$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/include
+DEPENDPATH += $$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/include
+
