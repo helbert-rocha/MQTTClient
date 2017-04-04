@@ -34,3 +34,13 @@ void Client::on_disconnect(int rc)
 {
     std::cout << "Cliente - desconectado (" << rc << ")" << std::endl;
 }
+
+void Client::on_publish(int mid){
+    std::cout << ">> Cliente mensagem - (" << mid <<") foi publicada com sucesso. " << std::endl;
+}
+
+bool Client::send_message(const char *_message, const char *_topic, int _qos)
+{
+    mosqpp::mosquittopp::publish(NULL, _topic, strlen(_message), _message, _qos, false);
+}
+

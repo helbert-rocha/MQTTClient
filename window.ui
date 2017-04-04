@@ -75,7 +75,7 @@
      <string>Desconectar</string>
     </property>
    </widget>
-   <widget class="QTabWidget" name="tabContent">
+   <widget class="QTabWidget" name="tabBrokerStatus">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -91,16 +91,126 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabPublish">
      <attribute name="title">
       <string>Publish</string>
      </attribute>
+     <widget class="QComboBox" name="comboBoxTopic">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>261</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+      <property name="currentText">
+       <string>Tópico</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonPublish">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>20</y>
+        <width>113</width>
+        <height>34</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Publish</string>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="textEditMessage">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>69</y>
+        <width>750</width>
+        <height>371</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Mensagem</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBoxQoS">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>0</y>
+        <width>251</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Qualidade de serviço</string>
+      </property>
+      <widget class="QRadioButton" name="radioButtonQoS0">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>100</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>QoS0</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioButtonQoS1">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>30</y>
+         <width>100</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>QoS1</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioButtonQoS2">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>30</y>
+         <width>100</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>QoS2</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabSubscribe">
      <attribute name="title">
       <string>Subscribe</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tabBrokerStatus">
+     <attribute name="title">
+      <string>Broker Status</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tabLog">
+     <attribute name="title">
+      <string>Log</string>
      </attribute>
     </widget>
    </widget>

@@ -13,12 +13,12 @@ private:
 
     void on_connect(int rc);
     void on_disconnect(int rc);
-//    void on_publish(int mid);
+    void on_publish(int mid);
 
 public:
     Client(const char *_id, const char *_topic, const char *_host, int _port);
    ~Client();
-    bool send_message(const char *message);
+    bool send_message(const char *_message, const char *_topic, int _qos);
 };
 
 #endif // CLIENT_H

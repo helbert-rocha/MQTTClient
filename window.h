@@ -20,6 +20,8 @@ private slots:
 
     void on_pushButtonDisconnect_clicked();
 
+    void on_pushButtonPublish_clicked();
+
 private:
     Ui::Window *ui;
     Client *client;
