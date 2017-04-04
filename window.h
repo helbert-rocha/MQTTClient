@@ -22,9 +22,15 @@ private slots:
 
     void on_pushButtonPublish_clicked();
 
+    void on_pushButtonSubscribe_clicked();
+
 private:
     Ui::Window *ui;
     Client *client;
+
+    void enableComponents();
+    void disableComponents();
+
 };
 
 #endif // WINDOW_H

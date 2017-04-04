@@ -44,3 +44,12 @@ bool Client::send_message(const char *_message, const char *_topic, int _qos)
     mosqpp::mosquittopp::publish(NULL, _topic, strlen(_message), _message, _qos, false);
 }
 
+bool Client::subscribe_topic(int *_mid, const char *_sub, int _qos){
+    mosqpp::mosquittopp::subscribe(NULL, _sub, _qos);
+}
+
+void Client::on_subscribe(int mid, int qos_count, const int *granted_qos)
+{
+    std::cout << "Subscrito no tópico. " << mid << std::endl;
+}
+
