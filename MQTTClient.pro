@@ -26,12 +26,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         window.cpp \
     publish.cpp \
-    client.cpp \
+    #client.cpp \
+    subscribe.cpp
     #utils.cpp
 
 HEADERS  += window.h \
     publish.h \
-    client.h \
+    #client.h \
+    subscribe.h
    # utils.h
 
 FORMS    += window.ui

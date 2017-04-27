@@ -2,7 +2,9 @@
 #define WINDOW_H
 
 #include <QMainWindow>
-#include "client.h"
+#include "publish.h"
+#include "subscribe.h"
+
 namespace Ui {
 class Window;
 }
@@ -24,12 +26,17 @@ private slots:
 
     void on_pushButtonSubscribe_clicked();
 
+    void on_pushButtonUnsubscribe_clicked();
+
 private:
     Ui::Window *ui;
-    Client *client;
+    Publish *publish;
+    Subscribe *subscribe;
 
-    void enableComponents();
-    void disableComponents();
+    void EnableComponents();
+    void DisableComponents();
+    void EnableConnectComponents();
+    void DisableConnectComponents();
 
 };
 

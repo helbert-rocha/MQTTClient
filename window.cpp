@@ -1,65 +1,68 @@
 #include "window.h"
 #include "ui_window.h"
 //#include "utils.h"
-#include "client.h"
 #include <iostream>
+
+using std::cout;
+using std::endl;
+using std::string;
 
 Window::Window(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Window)
 {
     ui->setupUi(this);
-    disableComponents();
+    DisableComponents();
 }
 
 Window::~Window()
 {
     delete ui;
+    delete publish;
+    delete subscribe;
 }
 
 void Window::on_pushButtonConnect_clicked()
 {
-    std::string address = ui->lineEditBrokerAddress->text().toStdString();
+    string address = ui->lineEditBrokerAddress->text().toStdString();
     const char *add = address.c_str();
     int port = ui->lineEditBrokerPort->text().toInt();
-    std::cout << "Endereço: " << add << std::endl;
-    std::cout << "Porta: " << port << std::endl;
-    ui->lineEditBrokerAddress->setEnabled(false);
-    ui->lineEditBrokerPort->setEnabled(false);
-    ui->pushButtonConnect->setEnabled(false);
-    client = new Client(NULL, NULL, add, port);
-   enableComponents();
+    cout << "Endereço: " << add << endl;
+    cout << "Porta: " << port << endl;
+    DisableConnectComponents();
+    publish = new Publish(add, port);
+    subscribe = new Subscribe(add, port);
+    EnableComponents();
 }
 
 void Window::on_pushButtonDisconnect_clicked()
 {
-    ui->lineEditBrokerAddress->setEnabled(true);
-    ui->lineEditBrokerPort->setEnabled(true);
-    ui->pushButtonConnect->setEnabled(true);
-    disableComponents();
-   delete client;
+    publish->disconnect();
+    subscribe->disconnect();
+    DisableComponents();
+    EnableConnectComponents();
 }
 
 void Window::on_pushButtonPublish_clicked()
 {
-    std::string topic = ui->comboBoxPublishTopic->currentText().toStdString();
+    string topic = ui->comboBoxPublishTopic->currentText().toStdString();
     const char *_topic = topic.c_str();
 
-    std::string message = ui->textEditMessage->toPlainText().toStdString();
+    string message = ui->textEditMessage->toPlainText().toStdString();
     const char *_message = message.c_str();
 
     if (ui->radioButtonQoS0Publish->isChecked())
     {
-        client->send_message(_message, _topic, 0);
+        publish->SendMessage(_message, _topic, 0);
     }else if(ui->radioButtonQoS1Publish->isChecked())
     {
-        client->send_message(_message, _topic, 1);
+        publish->SendMessage(_message, _topic, 1);
     }else{
-        client->send_message(_message, _topic, 2);
+        publish->SendMessage(_message, _topic, 2);
     }
 }
 
-void Window::enableComponents()
+void Window::EnableComponents()
 {
     ui->pushButtonPublish->setEnabled(true);
     ui->textEditMessage->setEnabled(true);
@@ -69,12 +72,13 @@ void Window::enableComponents()
     ui->radioButtonQoS2Publish->setEnabled(true);
     ui->comboBoxSubscribeTopic->setEnabled(true);
     ui->pushButtonSubscribe->setEnabled(true);
+    ui->pushButtonUnsubscribe->setEnabled(true);
     ui->radioButtonQoS0Subscribe->setEnabled(true);
     ui->radioButtonQoS1Subscribe->setEnabled(true);
     ui->radioButtonQoS2Subscribe->setEnabled(true);
 }
 
-void Window::disableComponents()
+void Window::DisableComponents()
 {
     ui->pushButtonPublish->setEnabled(false);
     ui->textEditMessage->setEnabled(false);
@@ -84,24 +88,70 @@ void Window::disableComponents()
     ui->radioButtonQoS2Publish->setEnabled(false);
     ui->comboBoxSubscribeTopic->setEnabled(false);
     ui->pushButtonSubscribe->setEnabled(false);
+    ui->pushButtonUnsubscribe->setEnabled(false);
     ui->radioButtonQoS0Subscribe->setEnabled(false);
     ui->radioButtonQoS1Subscribe->setEnabled(false);
     ui->radioButtonQoS2Subscribe->setEnabled(false);
 }
 
+void Window::EnableConnectComponents()
+{
+    ui->lineEditBrokerAddress->setEnabled(true);
+    ui->lineEditBrokerPort->setEnabled(true);
+    ui->pushButtonConnect->setEnabled(true);
+}
+
+void Window::DisableConnectComponents()
+{
+    ui->lineEditBrokerAddress->setEnabled(false);
+    ui->lineEditBrokerPort->setEnabled(false);
+    ui->pushButtonConnect->setEnabled(false);
+}
+
 void Window::on_pushButtonSubscribe_clicked()
 {
-    std::string topic = ui->comboBoxSubscribeTopic->currentText().toStdString();
+    string topic = ui->comboBoxSubscribeTopic->currentText().toStdString();
     const char *_topic = topic.c_str();
 
     if (ui->radioButtonQoS0Subscribe->isChecked())
     {
-        client->subscribe_topic(NULL, _topic, 0);
+        subscribe->SubscribeTopic(NULL, _topic, 0);
     }else if (ui->radioButtonQoS1Subscribe->isChecked())
     {
-        client->subscribe_topic(NULL, _topic, 1);
+        subscribe->SubscribeTopic(NULL, _topic, 1);
     }else{
-        client->subscribe_topic(NULL, _topic, 2);
+        subscribe->SubscribeTopic(NULL, _topic, 2);
     }
 
+//    QWidget *widgetTopic = new QWidget();
+//    widgetTopic->x = 10;
+//    widgetTopic->y = 70;
+//    widgetTopic->width = 254;
+//    widgetTopic->height = 80;
+
+//    Qlabel labelTopicName = new QLabel();
+//    labelTopicName.x = 20;
+//    labelTopicName.y = 10;
+//    labelTopicName.width = 60;
+//    labelTopicName.height = 16;
+//    labelTopicName.text = _topic;
+
+//    QLabel labelTopicElements = new QLabel();
+//    labelTopicElements.x = 180;
+//    labelTopicElements.y = 10;
+//    labelTopicElements.width = 60;
+//    labelTopicElements.height = 16;
+//    labelTopicElements.text = "1";
+
+
+
+    QListWidgetItem * item = new QListWidgetItem(_topic);
+    ui->listWidgetTopics->addItem(item);
+}
+
+void Window::on_pushButtonUnsubscribe_clicked()
+{
+    string topic = ui->comboBoxSubscribeTopic->currentText().toStdString();
+    const char *_topic = topic.c_str();
+    subscribe->UnsubscribeTopic(NULL, _topic);
 }
