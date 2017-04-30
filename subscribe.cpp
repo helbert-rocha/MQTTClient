@@ -19,9 +19,7 @@ Subscribe::Subscribe(const char *_host, int _port )
     this->loop_start();
 }
 
-Subscribe::Subscribe()
-{
-}
+Subscribe::Subscribe() {}
 
 Subscribe::~Subscribe()
 {
@@ -56,17 +54,16 @@ void Subscribe::on_unsubscribe(int mid)
 void Subscribe::on_message(const mosquitto_message *message)
 {
     cout << ">> Cliente subscribe >> tópico: " << message->topic << " qualidade de serviço: " << message->qos << " payload " << message->payload << endl;
-//    printf("%s %s\n", message->topic, message->payload);
        char buf[256];
        memset(buf, 0, 51*sizeof(char));
-//        /* Copy N-1 bytes to ensure always 0 terminated. */
         memcpy(buf, message->payload, 255*sizeof(char));
         cout << "msg " << buf << endl;
+
 }
 
 void Subscribe::on_log(int level, const char *string)
 {
-    cout << ">> Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+//    cout << ">> Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
 }
 
 

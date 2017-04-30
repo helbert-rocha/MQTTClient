@@ -27,14 +27,15 @@ SOURCES += main.cpp\
         window.cpp \
     publish.cpp \
     #client.cpp \
-    subscribe.cpp
-    #utils.cpp
+    subscribe.cpp \
+    brokerstatus.cpp \
+    utils.cpp
 
 HEADERS  += window.h \
     publish.h \
     #client.h \
-    subscribe.h
-   # utils.h
+    subscribe.h \
+    brokerstatus.h
 
 FORMS    += window.ui
 

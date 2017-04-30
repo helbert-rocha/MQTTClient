@@ -20,7 +20,6 @@ private:
     void on_message(const mosquitto_message *message);
     void on_log(int level, const char *string);
 
-
 public:
     Subscribe(const char *_host, int _port);
     Subscribe();

@@ -17,9 +17,7 @@ Publish::Publish(const char *_host, int _port)
 }
 
 Publish::Publish()
-{
-
-}
+{}
 
 Publish::~Publish()
 {
@@ -52,7 +50,7 @@ void Publish::on_message(const mosquitto_message *message){
 
 void Publish::on_log(int level, const char *string)
 {
-    cout << ">> Cliente publish >> Log de dados com level " << level << " e mensagem: " << string << endl;
+//    cout << ">> Cliente publish >> Log de dados com level " << level << " e mensagem: " << string << endl;
 }
 
 bool Publish::SendMessage(const char *_message, const char *_topic, int _qos){

@@ -1,13 +1,12 @@
-#include "utils.h"
+#include <stdio.h>
 #include <string.h>
 
-Utils::Utils()
-{
-
-}
-Utils::ConvertToChar(std::string text)
-{
-    std::string str = text;
-    const char *textConverted = str.c_str();
-    return textConverted;
+/*Converte os elementos vindos do payload que contem a mensagem
+ * para char
+*/
+char *ConvertToChar(const void *payload){
+    char buf[256];
+    memset(buf, 0, 51*sizeof(char));
+    memcpy(buf, payload, 255*sizeof(char));
+    return buf;
 }

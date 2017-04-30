@@ -2,6 +2,7 @@
 #include "ui_window.h"
 //#include "utils.h"
 #include <iostream>
+#include <unistd.h>
 
 using std::cout;
 using std::endl;
@@ -15,11 +16,13 @@ Window::Window(QWidget *parent) :
     DisableComponents();
 }
 
+
 Window::~Window()
 {
     delete ui;
     delete publish;
     delete subscribe;
+    delete brokerStatus;
 }
 
 void Window::on_pushButtonConnect_clicked()
@@ -32,6 +35,7 @@ void Window::on_pushButtonConnect_clicked()
     DisableConnectComponents();
     publish = new Publish(add, port);
     subscribe = new Subscribe(add, port);
+    brokerStatus = new BrokerStatus(add, port);
     EnableComponents();
 }
 
@@ -76,6 +80,8 @@ void Window::EnableComponents()
     ui->radioButtonQoS0Subscribe->setEnabled(true);
     ui->radioButtonQoS1Subscribe->setEnabled(true);
     ui->radioButtonQoS2Subscribe->setEnabled(true);
+    ui->pushButtonStatusStart->setEnabled(true);
+    ui->pushButtonStatusStop->setEnabled(true);
 }
 
 void Window::DisableComponents()
@@ -92,6 +98,8 @@ void Window::DisableComponents()
     ui->radioButtonQoS0Subscribe->setEnabled(false);
     ui->radioButtonQoS1Subscribe->setEnabled(false);
     ui->radioButtonQoS2Subscribe->setEnabled(false);
+    ui->pushButtonStatusStart->setEnabled(false);
+    ui->pushButtonStatusStop->setEnabled(false);
 }
 
 void Window::EnableConnectComponents()
@@ -154,4 +162,63 @@ void Window::on_pushButtonUnsubscribe_clicked()
     string topic = ui->comboBoxSubscribeTopic->currentText().toStdString();
     const char *_topic = topic.c_str();
     subscribe->UnsubscribeTopic(NULL, _topic);
+}
+
+//void Window::AddMessagesList(const char *_message){
+//    QListWidgetItem * item = new QListWidgetItem(_message);
+//    ui->listWidgetTopics->addItem(item);
+//}
+
+void Window::on_pushButtonStatusStart_clicked()
+{
+    ui->pushButtonStatusStart->setEnabled(false);
+    brokerStatus->SubscribeAllTopics();
+    usleep(100000);
+    GetBrokerInfos();
+//    ui->labelVersion->setText(brokerStatus->GetVersion());
+}
+
+
+
+void Window::on_pushButtonStatusStop_clicked()
+{
+    brokerStatus->UnsubscribeAllTopics();
+    ui->pushButtonStatusStart->setEnabled(true);
+    ui->labelVersion->setText("");
+    ui->labelUptime->setText("");
+    ui->labelTimestamp->setText("");
+    ui->labelSubscriptions->setText("");
+    ui->labelClientConnected->setText("");
+    ui->labelClientDisconnected->setText("");
+    ui->labelClientExpired->setText("");
+    ui->labelMaxClients->setText("");
+    ui->labelTotalClients->setText("");
+    ui->labelMessageSent->setText("");
+    ui->labelMessageReceived->setText("");
+    ui->labelMessageStored->setText("");
+    ui->labelBytesSent->setText("");
+    ui->labelBytesReceived->setText("");
+//    destroy(brokerStatus);
+}
+
+void Window::GetBrokerInfos(){
+    ui->labelVersion->setText(brokerStatus->GetVersion());
+    ui->labelUptime->setText(brokerStatus->GetUptime());
+    ui->labelTimestamp->setText(brokerStatus->GetTimestamp());
+    ui->labelSubscriptions->setText(brokerStatus->GetSubscriptions());
+    ui->labelClientConnected->setText(brokerStatus->GetClientsConnected());
+    ui->labelClientDisconnected->setText(brokerStatus->GetClientsDisconnected());
+    ui->labelClientExpired->setText(brokerStatus->GetClientsExpired());
+    ui->labelMaxClients->setText(brokerStatus->GetClientsMaximum());
+    ui->labelTotalClients->setText(brokerStatus->GetClientsTotal());
+    ui->labelMessageSent->setText(brokerStatus->GetMessageSent());
+    ui->labelMessageReceived->setText(brokerStatus->GetMessageReceived());
+    ui->labelMessageStored->setText(brokerStatus->GetMessageStored());
+    ui->labelBytesSent->setText(brokerStatus->GetBytesSent());
+    ui->labelBytesReceived->setText(brokerStatus->GetBytesReceived());
+}
+
+void Window::on_pushButtonReload_clicked()
+{
+    GetBrokerInfos();
 }

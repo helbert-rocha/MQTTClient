@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "publish.h"
 #include "subscribe.h"
+#include "brokerstatus.h"
+#include <stdlib.h>
 
 namespace Ui {
 class Window;
@@ -16,7 +18,6 @@ class Window : public QMainWindow
 public:
     explicit Window(QWidget *parent = 0);
     ~Window();
-
 private slots:
     void on_pushButtonConnect_clicked();
 
@@ -28,15 +29,26 @@ private slots:
 
     void on_pushButtonUnsubscribe_clicked();
 
+    void on_pushButtonStatusStart_clicked();
+
+    void on_pushButtonStatusStop_clicked();
+
+    void on_pushButtonReload_clicked();
+
 private:
     Ui::Window *ui;
     Publish *publish;
     Subscribe *subscribe;
+    BrokerStatus *brokerStatus;
+    const char *_host;
+    int _port;
 
     void EnableComponents();
     void DisableComponents();
     void EnableConnectComponents();
     void DisableConnectComponents();
+    void GetBrokerInfos();
+
 
 };
 
