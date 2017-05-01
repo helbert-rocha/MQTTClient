@@ -16,8 +16,7 @@ Publish::Publish(const char *_host, int _port)
     this->loop_start();
 }
 
-Publish::Publish()
-{}
+Publish::Publish(){}
 
 Publish::~Publish()
 {

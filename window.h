@@ -48,6 +48,7 @@ private:
     void EnableConnectComponents();
     void DisableConnectComponents();
     void GetBrokerInfos();
+    void UpdateList(const mosquitto_message *message);
 
 
 };

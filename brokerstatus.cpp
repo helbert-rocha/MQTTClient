@@ -109,11 +109,11 @@ void BrokerStatus::on_message(const mosquitto_message *message){
 }
 
 void BrokerStatus::on_connect(int rc){
-    cout << "Broker status conectado" << endl;
+    cout << ">> Broker status conectado" << endl;
 }
 
 void BrokerStatus::on_disconnect(int rc){
-    cout << "Broker status desconectado" << endl;
+    cout << ">> Broker status - desconectado (" << rc << ")" << endl;
 }
 
 void BrokerStatus::on_subscribe(int mid, int qos_count, const int *granted_qos){
@@ -121,7 +121,6 @@ void BrokerStatus::on_subscribe(int mid, int qos_count, const int *granted_qos){
 }
 
 char *BrokerStatus::GetVersion(){
-//    cout << "retorna a versao " << version << endl;
     return version;
 }
 

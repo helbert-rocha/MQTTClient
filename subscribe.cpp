@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 #include <stdio.h>
+#include "utils.cpp"
 
 using std::cout;
 using std::endl;
@@ -58,7 +59,7 @@ void Subscribe::on_message(const mosquitto_message *message)
        memset(buf, 0, 51*sizeof(char));
         memcpy(buf, message->payload, 255*sizeof(char));
         cout << "msg " << buf << endl;
-
+        window.UpdateList(message);
 }
 
 void Subscribe::on_log(int level, const char *string)
@@ -76,4 +77,8 @@ bool Subscribe::SubscribeTopic(int *mid, const char *_topic, int _qos)
 bool Subscribe::UnsubscribeTopic(int *mid, const char *_topic)
 {
     this->unsubscribe(NULL, _topic);
+}
+
+bool Subscribe::setWindow(Window* w){
+    window = w;
 }

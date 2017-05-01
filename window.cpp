@@ -14,6 +14,7 @@ Window::Window(QWidget *parent) :
 {
     ui->setupUi(this);
     DisableComponents();
+
 }
 
 
@@ -36,6 +37,7 @@ void Window::on_pushButtonConnect_clicked()
     publish = new Publish(add, port);
     subscribe = new Subscribe(add, port);
     brokerStatus = new BrokerStatus(add, port);
+    subscribe->setWindow(&this);
     EnableComponents();
 }
 
@@ -221,4 +223,8 @@ void Window::GetBrokerInfos(){
 void Window::on_pushButtonReload_clicked()
 {
     GetBrokerInfos();
+}
+
+void Window::UpdateList(const mosquitto_message *message){
+    cout << "tópico: " << message->topic << endl;
 }
