@@ -7,6 +7,9 @@
 #include "brokerstatus.h"
 #include <stdlib.h>
 #include "mosquittoapi.h"
+
+class BrokerStatus;
+
 namespace Ui {
 class Window;
 }
@@ -33,14 +36,13 @@ private slots:
 
     void on_pushButtonStatusStop_clicked();
 
-    void on_pushButtonReload_clicked();
-
 private:
     Ui::Window *ui;
     Publish *publish;
     Subscribe *subscribe;
     BrokerStatus *brokerStatus;
     MosquittoAPI *mosquittoAPI;
+    bool reload = false;
 
     const char *_host;
     int _port;

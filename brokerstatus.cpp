@@ -236,6 +236,7 @@ void BrokerStatus::SubscribeAllTopics(){
     SubscribeTopic(NULL, brokerBytesReceived, 0);
 }
 void BrokerStatus::UnsubscribeAllTopics(){
+    cout << "se desiscrevendo" << endl;
     UnsubscribeTopic(NULL, brokerVersion);
     UnsubscribeTopic(NULL, brokertUptime);
     UnsubscribeTopic(NULL, brokerTimestamp);

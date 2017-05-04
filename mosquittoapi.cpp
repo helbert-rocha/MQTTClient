@@ -1,6 +1,6 @@
 #include "mosquittoapi.h"
 #include <iostream>
-//#include "utils.cpp"
+#include "utils.cpp"
 using std::cout;
 using std::endl;
 
@@ -51,9 +51,9 @@ void MosquittoAPI::on_unsubscribe(int mid)
 void MosquittoAPI::on_message(const mosquitto_message *message)
 {
     char newMessage[256];
-//    strcpy(newMessage, ConvertToChar(message->payload));
+    strcpy(newMessage, ConvertToChar(message->payload));
 
-//    cout << "mensagem do broker: "<< newMessage << " com topico " << message->topic << endl;
+    cout << "mensagem do broker: "<< newMessage << " com topico " << message->topic << endl;
 }
 
 void MosquittoAPI::on_log(int level, const char *string)

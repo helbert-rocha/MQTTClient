@@ -3,7 +3,7 @@
 //#include "utils.h"
 #include <iostream>
 #include <unistd.h>
-#include "txt.h"
+
 using std::cout;
 using std::endl;
 using std::string;
@@ -42,8 +42,6 @@ void Window::on_pushButtonConnect_clicked()
     subscribe->setMosquittoAPI(mosquittoAPI);
     brokerStatus = new BrokerStatus(add, port);
 //    mosquittoAPI->SetBrokerStatus(brokerStatus);
-    TXT txt;
-    txt.save();
     EnableComponents();
 }
 
@@ -183,8 +181,10 @@ void Window::on_pushButtonStatusStart_clicked()
 {
     ui->pushButtonStatusStart->setEnabled(false);
     brokerStatus->SubscribeAllTopics();
+    reload = true;
     usleep(100000);
     GetBrokerInfos();
+
 //    ui->labelVersion->setText(brokerStatus->GetVersion());
 }
 
@@ -192,6 +192,7 @@ void Window::on_pushButtonStatusStart_clicked()
 
 void Window::on_pushButtonStatusStop_clicked()
 {
+    reload = false;
     brokerStatus->UnsubscribeAllTopics();
     ui->pushButtonStatusStart->setEnabled(true);
     ui->labelVersion->setText("");
@@ -212,23 +213,23 @@ void Window::on_pushButtonStatusStop_clicked()
 }
 
 void Window::GetBrokerInfos(){
-    ui->labelVersion->setText(brokerStatus->GetVersion());
-    ui->labelUptime->setText(brokerStatus->GetUptime());
-    ui->labelTimestamp->setText(brokerStatus->GetTimestamp());
-    ui->labelSubscriptions->setText(brokerStatus->GetSubscriptions());
-    ui->labelClientConnected->setText(brokerStatus->GetClientsConnected());
-    ui->labelClientDisconnected->setText(brokerStatus->GetClientsDisconnected());
-    ui->labelClientExpired->setText(brokerStatus->GetClientsExpired());
-    ui->labelMaxClients->setText(brokerStatus->GetClientsMaximum());
-    ui->labelTotalClients->setText(brokerStatus->GetClientsTotal());
-    ui->labelMessageSent->setText(brokerStatus->GetMessageSent());
-    ui->labelMessageReceived->setText(brokerStatus->GetMessageReceived());
-    ui->labelMessageStored->setText(brokerStatus->GetMessageStored());
-    ui->labelBytesSent->setText(brokerStatus->GetBytesSent());
-    ui->labelBytesReceived->setText(brokerStatus->GetBytesReceived());
-}
 
-void Window::on_pushButtonReload_clicked()
-{
-    GetBrokerInfos();
+    cout << "entra na funcao infos" <<  endl;
+    if(reload){
+        ui->labelVersion->setText(brokerStatus->GetVersion());
+        ui->labelUptime->setText(brokerStatus->GetUptime());
+        ui->labelTimestamp->setText(brokerStatus->GetTimestamp());
+        ui->labelSubscriptions->setText(brokerStatus->GetSubscriptions());
+        ui->labelClientConnected->setText(brokerStatus->GetClientsConnected());
+        ui->labelClientDisconnected->setText(brokerStatus->GetClientsDisconnected());
+        ui->labelClientExpired->setText(brokerStatus->GetClientsExpired());
+        ui->labelMaxClients->setText(brokerStatus->GetClientsMaximum());
+        ui->labelTotalClients->setText(brokerStatus->GetClientsTotal());
+        ui->labelMessageSent->setText(brokerStatus->GetMessageSent());
+        ui->labelMessageReceived->setText(brokerStatus->GetMessageReceived());
+        ui->labelMessageStored->setText(brokerStatus->GetMessageStored());
+        ui->labelBytesSent->setText(brokerStatus->GetBytesSent());
+        ui->labelBytesReceived->setText(brokerStatus->GetBytesReceived());
+        cout << "Antes da recursão" <<  endl;
+    }
 }
