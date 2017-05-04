@@ -10,3 +10,10 @@ char *ConvertToChar(const void *payload){
     memcpy(buf, payload, 255*sizeof(char));
     return buf;
 }
+
+char *convertToChar(const void *payload){
+    char buf[256];
+    memset(buf, 0, 51*sizeof(char));
+    memcpy(buf, payload, 255*sizeof(char));
+    return buf;
+}

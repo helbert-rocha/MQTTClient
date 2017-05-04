@@ -3,7 +3,7 @@
 //#include "utils.h"
 #include <iostream>
 #include <unistd.h>
-
+#include "txt.h"
 using std::cout;
 using std::endl;
 using std::string;
@@ -24,6 +24,7 @@ Window::~Window()
     delete publish;
     delete subscribe;
     delete brokerStatus;
+    delete mosquittoAPI;
 }
 
 void Window::on_pushButtonConnect_clicked()
@@ -34,17 +35,24 @@ void Window::on_pushButtonConnect_clicked()
     cout << "Endereço: " << add << endl;
     cout << "Porta: " << port << endl;
     DisableConnectComponents();
-    publish = new Publish(add, port);
-    subscribe = new Subscribe(add, port);
+    mosquittoAPI = new MosquittoAPI(add, port);
+    publish = new Publish();
+    publish->setMosquittoAPI(mosquittoAPI);
+    subscribe = new Subscribe();
+    subscribe->setMosquittoAPI(mosquittoAPI);
     brokerStatus = new BrokerStatus(add, port);
-//    subscribe->setWindow(&this);
+//    mosquittoAPI->SetBrokerStatus(brokerStatus);
+    TXT txt;
+    txt.save();
     EnableComponents();
 }
 
 void Window::on_pushButtonDisconnect_clicked()
 {
-    publish->disconnect();
-    subscribe->disconnect();
+//    publish->disconnect();
+//    subscribe->disconnect();
+    mosquittoAPI->disconnect();
+    brokerStatus->disconnect();
     DisableComponents();
     EnableConnectComponents();
 }
@@ -224,7 +232,3 @@ void Window::on_pushButtonReload_clicked()
 {
     GetBrokerInfos();
 }
-
-//void Window::UpdateList(const mosquitto_message *message){
-//    cout << "tópico: " << message->topic << endl;
-//}

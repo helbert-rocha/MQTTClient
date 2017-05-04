@@ -2,10 +2,10 @@
 #define BROKERSTATUS_H
 #include <mosquittopp.h>
 
-class BrokerStatus: public mosqpp::mosquittopp
+class BrokerStatus:public mosqpp::mosquittopp
 {
 private:
-    char version[100];
+    char version[50];
     char uptime[50];
     char timestamp[50];
     char subscriptions[50];
@@ -30,6 +30,20 @@ public:
     BrokerStatus(const char *_host, int _port);
     BrokerStatus();
     ~BrokerStatus();
+    void SetVersion(const char *string);
+    void SetUptime(const char *string);
+    void SetTimestamp(const char *string);
+    void SetSubscriptions(const char *string);
+    void SetClientsConnected(const char *string);
+    void SetClientsDisconnected(const char *string);
+    void SetClientsExpired(const char *string);
+    void SetClientsMaximum(const char *string);
+    void SetClientsTotal(const char *string);
+    void SetMessageSent(const char *string);
+    void SetMessageReceived(const char *string);
+    void SetMessageStored(const char *string);
+    void SetBytesSent(const char *string);
+    void SetBytesReceived(const char *string);
     char* GetVersion();
     char* GetUptime();
     char* GetTimestamp();

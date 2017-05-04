@@ -29,13 +29,23 @@ SOURCES += main.cpp\
     #client.cpp \
     subscribe.cpp \
     brokerstatus.cpp \
-    utils.cpp
+    utils.cpp \
+    mosquittoapi.cpp \
+    element.cpp \
+    list.cpp \
+    savetoformat.cpp \
+    txt.cpp
 
 HEADERS  += window.h \
     publish.h \
     #client.h \
     subscribe.h \
-    brokerstatus.h
+    brokerstatus.h \
+    mosquittoapi.h \
+    element.h \
+    list.h \
+    savetoformat.h \
+    txt.h
 
 FORMS    += window.ui
 

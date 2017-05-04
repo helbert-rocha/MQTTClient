@@ -7,27 +7,27 @@
 using std::cout;
 using std::endl;
 
-Subscribe::Subscribe(const char *_host, int _port )
-{
-    //Inicia a API do mosquitto
-    mosqpp::lib_init();
-    this->keepalive=60;
-    this->host = _host;
-    this->port = _port;
-    //Conecta o subscribe
-    this->connect(host, port, keepalive);
-    this->loop_start();
-}
+//Subscribe::Subscribe(const char *_host, int _port )
+//{
+////    //Inicia a API do mosquitto
+////    mosqpp::lib_init();
+////    this->keepalive=60;
+////    this->host = _host;
+////    this->port = _port;
+////    //Conecta o subscribe
+////    this->connect(host, port, keepalive);
+////    this->loop_start();
+//}
 
 Subscribe::Subscribe() {}
 
 Subscribe::~Subscribe()
 {
-    this->loop_stop();
-    mosqpp::lib_cleanup();
+//    this->loop_stop();
+//    mosqpp::lib_cleanup();
 }
 
-void Subscribe::on_connect(int rc)
+/*void Subscribe::on_connect(int rc)
 {
     if (0 == rc){
         cout << ">> Cliente subscribe - conectado ao servidor." << endl;
@@ -64,18 +64,28 @@ void Subscribe::on_message(const mosquitto_message *message)
 void Subscribe::on_log(int level, const char *string)
 {
 //    cout << ">> Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+}*/
+
+void Subscribe::setMosquittoAPI(MosquittoAPI *api){
+    mosquittoAPI = api;
 }
 
+MosquittoAPI* Subscribe::getMosquittoAPI()
+{
+    return mosquittoAPI;
+}
 
 bool Subscribe::SubscribeTopic(int *mid, const char *_topic, int _qos)
 {
-    this->subscribe(NULL, _topic, _qos);
+    mosquittoAPI->SubscribeTopic(NULL, _topic, _qos);
+//    this->subscribe(NULL, _topic, _qos);
 }
 
 
 bool Subscribe::UnsubscribeTopic(int *mid, const char *_topic)
 {
-    this->unsubscribe(NULL, _topic);
+    mosquittoAPI->UnsubscribeTopic(NULL, _topic);
+//    this->unsubscribe(NULL, _topic);
 }
 
 //bool Subscribe::setWindow(Window* w){

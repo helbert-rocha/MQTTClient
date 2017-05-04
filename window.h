@@ -6,7 +6,7 @@
 #include "subscribe.h"
 #include "brokerstatus.h"
 #include <stdlib.h>
-
+#include "mosquittoapi.h"
 namespace Ui {
 class Window;
 }
@@ -40,6 +40,8 @@ private:
     Publish *publish;
     Subscribe *subscribe;
     BrokerStatus *brokerStatus;
+    MosquittoAPI *mosquittoAPI;
+
     const char *_host;
     int _port;
 
@@ -48,7 +50,6 @@ private:
     void EnableConnectComponents();
     void DisableConnectComponents();
     void GetBrokerInfos();
-    void UpdateList(const mosquitto_message *message);
 
 
 };

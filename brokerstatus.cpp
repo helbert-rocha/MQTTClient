@@ -120,6 +120,49 @@ void BrokerStatus::on_subscribe(int mid, int qos_count, const int *granted_qos){
     cout << ">> Broker status subscrito com id: " << mid << endl;
 }
 
+void BrokerStatus::SetVersion(const char *string){
+    strcpy(version, string);
+}
+void BrokerStatus::SetUptime(const char *string){
+    strcpy(uptime, string);
+}
+void BrokerStatus::SetTimestamp(const char *string){
+    strcpy(timestamp, string);
+}
+void BrokerStatus::SetSubscriptions(const char *string){
+    strcpy(subscriptions, string);
+}
+void BrokerStatus::SetClientsConnected(const char *string){
+    strcpy(clientsConnected, string);
+}
+void BrokerStatus::SetClientsDisconnected(const char *string){
+    strcpy(clientsDisconnected, string);
+}
+void BrokerStatus::SetClientsExpired(const char *string){
+    strcpy(clientsExpired, string);
+}
+void BrokerStatus::SetClientsMaximum(const char *string){
+    strcpy(version, string);
+}
+void BrokerStatus::SetClientsTotal(const char *string){
+    strcpy(clientsTotal, string);
+}
+void BrokerStatus::SetMessageSent(const char *string){
+    strcpy(messagesSent, string);
+}
+void BrokerStatus::SetMessageReceived(const char *string){
+    strcpy(messagesReceived, string);
+}
+void BrokerStatus::SetMessageStored(const char *string){
+    strcpy(messagesStored, string);
+}
+void BrokerStatus::SetBytesSent(const char *string){
+    strcpy(bytesSent, string);
+}
+void BrokerStatus::SetBytesReceived(const char *string){
+    strcpy(bytesReceived, string);
+}
+
 char *BrokerStatus::GetVersion(){
     return version;
 }
