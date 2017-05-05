@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     element.cpp \
     list.cpp \
     savetoformat.cpp \
-    txt.cpp
+    txt.cpp \
+    #apisingleton.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -45,7 +46,8 @@ HEADERS  += window.h \
     element.h \
     list.h \
     savetoformat.h \
-    txt.h
+    txt.h \
+    #apisingleton.h
 
 FORMS    += window.ui
 

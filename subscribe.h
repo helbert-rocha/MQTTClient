@@ -4,6 +4,8 @@
 //#include "window.h"
 #include "mosquittoapi.h"
 
+class MosquittoAPI;
+
 class Subscribe
 {
 private:

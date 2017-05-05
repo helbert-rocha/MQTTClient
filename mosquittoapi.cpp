@@ -52,8 +52,9 @@ void MosquittoAPI::on_message(const mosquitto_message *message)
 {
     char newMessage[256];
     strcpy(newMessage, ConvertToChar(message->payload));
+    window->UpdateMessageList(message->topic, newMessage, message->qos);
 
-    cout << "mensagem do broker: "<< newMessage << " com topico " << message->topic << endl;
+    cout << "mensagem da API: "<< newMessage << " com topico " << message->topic << endl;
 }
 
 void MosquittoAPI::on_log(int level, const char *string)
@@ -73,4 +74,8 @@ bool MosquittoAPI::SubscribeTopic(int *_mid, const char *_topic, int _qos)
 bool MosquittoAPI::UnsubscribeTopic(int *_mid, const char *_topic)
 {
     this->unsubscribe(NULL, _topic);
+}
+
+void MosquittoAPI::SetWindow(Window *_window){
+    window = _window;
 }

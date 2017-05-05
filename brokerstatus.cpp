@@ -106,6 +106,7 @@ void BrokerStatus::on_message(const mosquitto_message *message){
         strcpy(bytesReceived, newMessage);
     }
     cout << "mensagem do broker: " << newMessage << "com topico " << message->topic << endl;
+    window->GetBrokerInfos();
 }
 
 void BrokerStatus::on_connect(int rc){
@@ -236,7 +237,6 @@ void BrokerStatus::SubscribeAllTopics(){
     SubscribeTopic(NULL, brokerBytesReceived, 0);
 }
 void BrokerStatus::UnsubscribeAllTopics(){
-    cout << "se desiscrevendo" << endl;
     UnsubscribeTopic(NULL, brokerVersion);
     UnsubscribeTopic(NULL, brokertUptime);
     UnsubscribeTopic(NULL, brokerTimestamp);
@@ -251,4 +251,8 @@ void BrokerStatus::UnsubscribeAllTopics(){
     UnsubscribeTopic(NULL, brokerMessageStored);
     UnsubscribeTopic(NULL, brokerBytesSent);
     UnsubscribeTopic(NULL, brokerBytesReceived);
+}
+
+void BrokerStatus::SetWindow(Window *win){
+    window = win;
 }

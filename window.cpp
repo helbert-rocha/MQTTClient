@@ -36,11 +36,13 @@ void Window::on_pushButtonConnect_clicked()
     cout << "Porta: " << port << endl;
     DisableConnectComponents();
     mosquittoAPI = new MosquittoAPI(add, port);
+    mosquittoAPI->SetWindow(this);
     publish = new Publish();
     publish->setMosquittoAPI(mosquittoAPI);
     subscribe = new Subscribe();
     subscribe->setMosquittoAPI(mosquittoAPI);
     brokerStatus = new BrokerStatus(add, port);
+    brokerStatus->SetWindow(this);
 //    mosquittoAPI->SetBrokerStatus(brokerStatus);
     EnableComponents();
 }
@@ -181,7 +183,6 @@ void Window::on_pushButtonStatusStart_clicked()
 {
     ui->pushButtonStatusStart->setEnabled(false);
     brokerStatus->SubscribeAllTopics();
-    reload = true;
     usleep(100000);
     GetBrokerInfos();
 
@@ -214,8 +215,7 @@ void Window::on_pushButtonStatusStop_clicked()
 
 void Window::GetBrokerInfos(){
 
-    cout << "entra na funcao infos" <<  endl;
-    if(reload){
+    cout << "Atualizando informacoes" <<  endl;
         ui->labelVersion->setText(brokerStatus->GetVersion());
         ui->labelUptime->setText(brokerStatus->GetUptime());
         ui->labelTimestamp->setText(brokerStatus->GetTimestamp());
@@ -230,6 +230,9 @@ void Window::GetBrokerInfos(){
         ui->labelMessageStored->setText(brokerStatus->GetMessageStored());
         ui->labelBytesSent->setText(brokerStatus->GetBytesSent());
         ui->labelBytesReceived->setText(brokerStatus->GetBytesReceived());
-        cout << "Antes da recursão" <<  endl;
-    }
+}
+
+void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
+    QListWidgetItem * item = new QListWidgetItem(_message);
+    ui->listWidgetMessages->addItem(item);
 }

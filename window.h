@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "mosquittoapi.h"
 
+class Publish;
+class Subscribe;
 class BrokerStatus;
 
 namespace Ui {
@@ -19,8 +21,10 @@ class Window : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Window(QWidget *parent = 0);
+     explicit Window(QWidget *parent = 0);
     ~Window();
+    void GetBrokerInfos();
+    void UpdateMessageList(char *_topic, char *_message, int _qos);
 private slots:
     void on_pushButtonConnect_clicked();
 
@@ -51,7 +55,7 @@ private:
     void DisableComponents();
     void EnableConnectComponents();
     void DisableConnectComponents();
-    void GetBrokerInfos();
+
 
 
 };

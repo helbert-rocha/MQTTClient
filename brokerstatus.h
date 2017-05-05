@@ -1,6 +1,8 @@
 #ifndef BROKERSTATUS_H
 #define BROKERSTATUS_H
 #include <mosquittopp.h>
+#include "window.h"
+class Window;
 
 class BrokerStatus:public mosqpp::mosquittopp
 {
@@ -19,6 +21,7 @@ private:
     char messagesStored[50];
     char bytesSent[50];
     char bytesReceived[50];
+    Window *window;
 
     void on_connect(int rc);
     void on_disconnect(int rc);
@@ -30,6 +33,7 @@ public:
     BrokerStatus(const char *_host, int _port);
     BrokerStatus();
     ~BrokerStatus();
+    void SetWindow(Window *win);
     void SetVersion(const char *string);
     void SetUptime(const char *string);
     void SetTimestamp(const char *string);

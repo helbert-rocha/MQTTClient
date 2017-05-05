@@ -2,6 +2,8 @@
 #define PUBLISH_H
 #include <mosquittopp.h>
 #include "mosquittoapi.h"
+class MosquittoAPI;
+
 class Publish
 {
 private:
