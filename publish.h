@@ -1,22 +1,13 @@
 #ifndef PUBLISH_H
 #define PUBLISH_H
-#include <mosquittopp.h>
 #include "mosquittoapi.h"
 class MosquittoAPI;
 
 class Publish
 {
 private:
-//    const char *host;
-//    const char *id;
-//    const char *topic;
-//    int *mid;
-
-//    int port;
-//    int keepalive;
     MosquittoAPI *mosquittoAPI;
 public:
-    Publish(const char *_host, int _port);
     Publish();
     ~Publish();
     void setMosquittoAPI(MosquittoAPI *api);

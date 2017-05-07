@@ -121,6 +121,11 @@ void BrokerStatus::on_subscribe(int mid, int qos_count, const int *granted_qos){
     cout << ">> Broker status subscrito com id: " << mid << endl;
 }
 
+void BrokerStatus::on_log(int level, const char *string)
+{
+    cout << ">> BrokerStatus Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+}
+
 void BrokerStatus::SetVersion(const char *string){
     strcpy(version, string);
 }

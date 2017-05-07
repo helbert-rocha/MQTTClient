@@ -75,7 +75,7 @@
      <string>Desconectar</string>
     </property>
    </widget>
-   <widget class="QTabWidget" name="tabBrokerStatus">
+   <widget class="QTabWidget" name="tabMain">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -91,7 +91,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tabPublish">
      <attribute name="title">
@@ -359,7 +359,7 @@
        <string>Unsubscribe</string>
       </property>
      </widget>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="groupBoxBroker">
       <property name="geometry">
        <rect>
         <x>29</x>
@@ -481,7 +481,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_2">
+     <widget class="QGroupBox" name="groupBoxClients">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -629,7 +629,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_3">
+     <widget class="QGroupBox" name="groupBoxMessages">
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -725,7 +725,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_4">
+     <widget class="QGroupBox" name="groupBoxTraffic">
       <property name="geometry">
        <rect>
         <x>410</x>

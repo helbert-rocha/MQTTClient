@@ -27,7 +27,7 @@ private:
     void on_disconnect(int rc);
     void on_subscribe(int mid, int qos_count, const int *granted_qos);
     void on_message(const mosquitto_message *message);
-//    void on_log(int level, const char *string);
+    void on_log(int level, const char *string);
 
 public:
     BrokerStatus(const char *_host, int _port);
