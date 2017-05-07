@@ -30,6 +30,10 @@ Element<TYPE>::Element()
     pPrev = NULL;
     pInfo = NULL;
 }
+template<class TYPE>
+Element<TYPE>::~Element()
+{}
+
 
 template<class TYPE>
 void Element<TYPE>::setNext(Element<TYPE> *pN)

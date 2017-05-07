@@ -108,7 +108,7 @@ bool List<TYPE>::addInfo( TYPE *pInfo )
      }
      else
      {
-          printf ( "Erro, Element (informa��o) nulo(a) na List. \n" );
+          printf ( "Erro, Element (informação) nulo(a) na List. \n" );
           return false;
      }
 }

@@ -36,6 +36,8 @@ SOURCES += main.cpp\
     savetoformat.cpp \
     txt.cpp \
     #apisingleton.cpp
+    loglist.cpp \
+    log.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -48,6 +50,8 @@ HEADERS  += window.h \
     savetoformat.h \
     txt.h \
     #apisingleton.h
+    loglist.h \
+    log.h
 
 FORMS    += window.ui
 
