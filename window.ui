@@ -91,7 +91,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabPublish">
      <attribute name="title">
@@ -289,16 +289,6 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QListView" name="listView_3">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>270</y>
-        <width>481</width>
-        <height>171</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButtonUnsubscribe">
       <property name="geometry">
        <rect>
@@ -332,6 +322,16 @@
         <y>70</y>
         <width>481</width>
         <height>192</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tableWidgetMessageDetails">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>270</y>
+        <width>481</width>
+        <height>171</height>
        </rect>
       </property>
      </widget>
