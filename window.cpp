@@ -3,6 +3,7 @@
 //#include "utils.h"
 #include <iostream>
 #include <unistd.h>
+#include <QHBoxLayout>
 
 using std::cout;
 using std::endl;
@@ -141,6 +142,8 @@ void Window::on_pushButtonSubscribe_clicked()
         subscribe->SubscribeTopic(NULL, _topic, 2);
     }
 
+
+
 //    QWidget *widgetTopic = new QWidget();
 //    widgetTopic->x = 10;
 //    widgetTopic->y = 70;
@@ -161,8 +164,6 @@ void Window::on_pushButtonSubscribe_clicked()
 //    labelTopicElements.height = 16;
 //    labelTopicElements.text = "1";
 
-
-
     QListWidgetItem * item = new QListWidgetItem(_topic);
     ui->listWidgetTopics->addItem(item);
 }
@@ -172,6 +173,8 @@ void Window::on_pushButtonUnsubscribe_clicked()
     string topic = ui->comboBoxSubscribeTopic->currentText().toStdString();
     const char *_topic = topic.c_str();
     subscribe->UnsubscribeTopic(NULL, _topic);
+    ui->listWidgetTopics->clear();
+    ui->listWidgetMessages->clear();
 }
 
 //void Window::AddMessagesList(const char *_message){
@@ -188,8 +191,6 @@ void Window::on_pushButtonStatusStart_clicked()
 
 //    ui->labelVersion->setText(brokerStatus->GetVersion());
 }
-
-
 
 void Window::on_pushButtonStatusStop_clicked()
 {
