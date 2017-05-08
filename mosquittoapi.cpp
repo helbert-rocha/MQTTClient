@@ -60,6 +60,7 @@ void MosquittoAPI::on_message(const mosquitto_message *message)
 void MosquittoAPI::on_log(int level, const char *string)
 {
     cout << ">> MosquittoAPI Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+    window->UpdateLogList(string);
 }
 
 bool MosquittoAPI::PublishMessage(const char *_message, const char *_topic, int _qos){

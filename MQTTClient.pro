@@ -51,7 +51,8 @@ HEADERS  += window.h \
     txt.h \
     #apisingleton.h
     loglist.h \
-    log.h
+    log.h \
+    date.h
 
 FORMS    += window.ui
 

@@ -7,6 +7,8 @@
 #include "brokerstatus.h"
 #include <stdlib.h>
 #include "mosquittoapi.h"
+#include "log.h"
+#include "loglist.h"
 
 class Publish;
 class Subscribe;
@@ -25,6 +27,7 @@ public:
     ~Window();
     void GetBrokerInfos();
     void UpdateMessageList(char *_topic, char *_message, int _qos);
+    void UpdateLogList(const char *_message);
 private slots:
     void on_pushButtonConnect_clicked();
 
@@ -46,7 +49,8 @@ private:
     Subscribe *subscribe;
     BrokerStatus *brokerStatus;
     MosquittoAPI *mosquittoAPI;
-    bool reload = false;
+    Log *log;
+    LogList *logList;
 
     const char *_host;
     int _port;
@@ -55,8 +59,6 @@ private:
     void DisableComponents();
     void EnableConnectComponents();
     void DisableConnectComponents();
-
-
 
 };
 

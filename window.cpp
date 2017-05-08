@@ -4,7 +4,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <QHBoxLayout>
-
+#include <string.h>
+#include <list.h>
 using std::cout;
 using std::endl;
 using std::string;
@@ -26,6 +27,8 @@ Window::~Window()
     delete subscribe;
     delete brokerStatus;
     delete mosquittoAPI;
+    delete log;
+    delete logList;
 }
 
 void Window::on_pushButtonConnect_clicked()
@@ -44,6 +47,9 @@ void Window::on_pushButtonConnect_clicked()
     subscribe->setMosquittoAPI(mosquittoAPI);
     brokerStatus = new BrokerStatus(add, port);
     brokerStatus->SetWindow(this);
+    log = new Log("Start the program");
+    logList = new LogList();
+    logList->AddLog(log);
 //    mosquittoAPI->SetBrokerStatus(brokerStatus);
     EnableComponents();
 }
@@ -194,7 +200,6 @@ void Window::on_pushButtonStatusStart_clicked()
 
 void Window::on_pushButtonStatusStop_clicked()
 {
-    reload = false;
     brokerStatus->UnsubscribeAllTopics();
     ui->pushButtonStatusStart->setEnabled(true);
     ui->labelVersion->setText("");
@@ -215,7 +220,6 @@ void Window::on_pushButtonStatusStop_clicked()
 }
 
 void Window::GetBrokerInfos(){
-
     cout << "Atualizando informacoes" <<  endl;
         ui->labelVersion->setText(brokerStatus->GetVersion());
         ui->labelUptime->setText(brokerStatus->GetUptime());
@@ -236,4 +240,17 @@ void Window::GetBrokerInfos(){
 void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
     QListWidgetItem * item = new QListWidgetItem(_message);
     ui->listWidgetMessages->addItem(item);
+}
+
+void Window::UpdateLogList(const char *_message){
+    cout << "update log" << endl;
+    Log *newlog = new Log(strdup(_message));
+    cout << "volta depois de criar"<< endl;
+//    log = new Log("teste");
+//    logList->ListLogs();
+//    char logs[500];
+
+//    strcpy(logs, strcat(newlog->GetDate(), newlog->GetMessage()));
+//    QListWidgetItem *items = new QListWidgetItem("oi");
+//    ui->listWidgetLog->addItem(items);
 }

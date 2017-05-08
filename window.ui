@@ -800,6 +800,16 @@
      <attribute name="title">
       <string>Log</string>
      </attribute>
+     <widget class="QListWidget" name="listWidgetLogList">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>731</width>
+        <height>401</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
