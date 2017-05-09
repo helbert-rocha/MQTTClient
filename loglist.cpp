@@ -1,9 +1,11 @@
 #include "loglist.h"
 #include <ctime>
 #include <iostream>
+#include <fstream>
 using std::cout;
 using std::endl;
-
+using std::ofstream;
+using std::ios;
 LogList::LogList()
 {}
 LogList::~LogList()
@@ -23,7 +25,28 @@ void LogList::AddLog(Log *log){
 }
 
 void LogList::SaveLogs(){
+    cout << "salvando txt" << endl;
+    ofstream SaveList("/Users/helbert/Desktop/loglist.txt", ios::out);
+    if (!SaveList )
+     {
+        cout << " Arquivo não pode ser aberto " << endl;
+        fflush (stdin);
+        getchar();
+     return;
+     }
 
+    Element<Log>* pEIAux = NULL;
+    Log* pLLAux = NULL;
+    pEIAux = LLog.getFirst();
+    cout << "Salvando lista" << endl;
+    while(NULL != pEIAux)
+    {
+        cout << "entrou no while da lista" << endl;
+        pLLAux = pEIAux->getInfo();
+        SaveList << pLLAux->GetDate() << "  " << pLLAux->GetMessage() << endl;
+        pEIAux = pEIAux->getNext();
+    }
+    SaveList.close();
 }
 
 void LogList::RecoverLogs()

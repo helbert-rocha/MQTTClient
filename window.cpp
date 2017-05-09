@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <list.h>
+#include "loglistdao.h"
+#include "txtloglistdao.h"
 using std::cout;
 using std::endl;
 using std::string;
@@ -250,4 +252,11 @@ void Window::UpdateLogList(char *_message){
     strcpy(logs, strcat(date, message));
     QListWidgetItem * item = new QListWidgetItem(logs);
     ui->listWidgetLogs->addItem(item);
+}
+
+void Window::on_pushButtonSaveLogTxt_clicked()
+{
+//    TXTLogListDAO txtLogListDAO;
+//    txtLogListDAO.save(logList);
+    logList->SaveLogs();
 }

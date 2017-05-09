@@ -43,6 +43,8 @@ private slots:
 
     void on_pushButtonStatusStop_clicked();
 
+    void on_pushButtonSaveLogTxt_clicked();
+
 private:
     Ui::Window *ui;
     Publish *publish;

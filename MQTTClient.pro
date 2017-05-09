@@ -34,10 +34,11 @@ SOURCES += main.cpp\
     element.cpp \
     list.cpp \
     savetoformat.cpp \
-    txt.cpp \
     #apisingleton.cpp
     loglist.cpp \
-    log.cpp
+    log.cpp \
+    loglistdao.cpp \
+    txtloglistdao.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -48,11 +49,12 @@ HEADERS  += window.h \
     element.h \
     list.h \
     savetoformat.h \
-    txt.h \
     #apisingleton.h
     loglist.h \
     log.h \
-    date.h
+    date.h \
+    loglistdao.h \
+    txtloglistdao.h
 
 FORMS    += window.ui
 
