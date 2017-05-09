@@ -800,13 +800,13 @@
      <attribute name="title">
       <string>Log</string>
      </attribute>
-     <widget class="QListWidget" name="listWidgetLogList">
+     <widget class="QListWidget" name="listWidgetLogs">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>731</width>
-        <height>401</height>
+        <x>30</x>
+        <y>30</y>
+        <width>701</width>
+        <height>351</height>
        </rect>
       </property>
      </widget>

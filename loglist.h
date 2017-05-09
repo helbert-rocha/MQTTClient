@@ -16,6 +16,7 @@ public:
     void AddLog(Log *log);
 
     void ListLogs();
+    void ListLogs2();
 
     void SaveLogs();
     void RecoverLogs();

@@ -53,14 +53,14 @@ void MosquittoAPI::on_message(const mosquitto_message *message)
     char newMessage[256];
     strcpy(newMessage, ConvertToChar(message->payload));
     window->UpdateMessageList(message->topic, newMessage, message->qos);
-
+    window->UpdateLogList(newMessage);
     cout << "mensagem da API: "<< newMessage << " com topico " << message->topic << endl;
 }
 
 void MosquittoAPI::on_log(int level, const char *string)
 {
-    cout << ">> MosquittoAPI Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
-    window->UpdateLogList(string);
+//    cout << ">> MosquittoAPI Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+
 }
 
 bool MosquittoAPI::PublishMessage(const char *_message, const char *_topic, int _qos){
