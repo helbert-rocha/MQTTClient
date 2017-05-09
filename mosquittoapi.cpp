@@ -53,13 +53,19 @@ void MosquittoAPI::on_message(const mosquitto_message *message)
     char newMessage[256];
     strcpy(newMessage, ConvertToChar(message->payload));
     window->UpdateMessageList(message->topic, newMessage, message->qos);
-    window->UpdateLogList(newMessage);
+//    window->UpdateLogList(newMessage);
     cout << "mensagem da API: "<< newMessage << " com topico " << message->topic << endl;
 }
 
 void MosquittoAPI::on_log(int level, const char *string)
 {
-//    cout << ">> MosquittoAPI Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+   cout << ">> MosquittoAPI Cliente subscribe >> Log de dados com level " << level << " e mensagem: " << string << endl;
+   const int existConnect = strstr(string, "CONNECT") != NULL;
+   const int existConnack = strstr(string, "CONNACK") != NULL;
+//   cout << "existe connect " << exists << endl;
+   if(existConnect!=1 && existConnack!=1){
+     window->UpdateLogList(string);
+   }
 
 }
 

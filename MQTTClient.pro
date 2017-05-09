@@ -33,7 +33,6 @@ SOURCES += main.cpp\
     mosquittoapi.cpp \
     element.cpp \
     list.cpp \
-    savetoformat.cpp \
     #apisingleton.cpp
     loglist.cpp \
     log.cpp \
@@ -48,7 +47,6 @@ HEADERS  += window.h \
     mosquittoapi.h \
     element.h \
     list.h \
-    savetoformat.h \
     #apisingleton.h
     loglist.h \
     log.h \

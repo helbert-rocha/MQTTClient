@@ -27,7 +27,7 @@ public:
     ~Window();
     void GetBrokerInfos();
     void UpdateMessageList(char *_topic, char *_message, int _qos);
-    void UpdateLogList(char *_message);
+    void UpdateLogList(const char *_message);
 private slots:
     void on_pushButtonConnect_clicked();
 
@@ -52,7 +52,7 @@ private:
     BrokerStatus *brokerStatus;
     MosquittoAPI *mosquittoAPI;
     LogList *logList;
-
+    int login = 0;
     const char *_host;
     int _port;
 

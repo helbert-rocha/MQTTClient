@@ -7,6 +7,7 @@
 #include <list.h>
 #include "loglistdao.h"
 #include "txtloglistdao.h"
+
 using std::cout;
 using std::endl;
 using std::string;
@@ -232,26 +233,31 @@ void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
     ui->listWidgetMessages->addItem(item);
 }
 
-void Window::UpdateLogList(char *_message){
-//    QListWidgetItem * item = new QListWidgetItem(_message);
-//    ui->listWidget->addItem(item);
-    cout << "update log" << endl;
-    Log *newlog = new Log(strdup(_message));
-    cout << "volta depois de criar"<< endl;
-    logList->AddLog(newlog);
-    //    log = new Log("teste");
-    logList->ListLogs();
-    char logs[500];
-    char date[50];
-    strcpy(date,newlog->GetDate());
-    strcat(date, "  ");
-    char message[400];
-    strcpy(message, newlog->GetMessage());
-    cout <<"concatenar " << strcat(date, message) << endl;
+void Window::UpdateLogList(const char *_message){
 
-    strcpy(logs, strcat(date, message));
-    QListWidgetItem * item = new QListWidgetItem(logs);
-    ui->listWidgetLogs->addItem(item);
+        //    QListWidgetItem * item = new QListWidgetItem(_message);
+        //    ui->listWidget->addItem(item);
+        cout << "update log" << endl;
+        Log *newlog = new Log(strdup(_message));
+        cout << "volta depois de criar"<< endl;
+        logList->AddLog(newlog);
+            //    log = new Log("teste");
+        //    logList->ListLogs();
+        char logs[3000];
+        char date[50];
+        strcpy(date,newlog->GetDate());
+        strcat(date, "  ");
+        char message[2000];
+        strcpy(message, newlog->GetMessage());
+        char cat[2500];
+        strcpy(cat,strcat(date, message));
+        cout <<"concatenar " << cat << endl;
+
+        strcpy(logs, cat);
+        QListWidgetItem * item = new QListWidgetItem(logs);
+        ui->listWidgetLogs->addItem(item);
+
+
 }
 
 void Window::on_pushButtonSaveLogTxt_clicked()
