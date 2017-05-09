@@ -9,7 +9,9 @@
 #include "mosquittoapi.h"
 #include "log.h"
 #include "loglist.h"
-
+#include "logdao.h"
+#include "txtlogdao.h"
+#include "csvlogdao.h"
 class Publish;
 class Subscribe;
 class BrokerStatus;
@@ -43,8 +45,6 @@ private slots:
 
     void on_pushButtonStatusStop_clicked();
 
-    void on_pushButtonSaveLogTxt_clicked();
-
 private:
     Ui::Window *ui;
     Publish *publish;
@@ -52,9 +52,12 @@ private:
     BrokerStatus *brokerStatus;
     MosquittoAPI *mosquittoAPI;
     LogList *logList;
-    int login = 0;
+    LogDao *logDao;
+    TXTLogDao txtLogDao;
+    CSVLogDao csvLogDao;
     const char *_host;
     int _port;
+    void saveLog(LogDao *logDao, Log *_log);
 
     void EnableComponents();
     void DisableComponents();

@@ -5,9 +5,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <list.h>
-#include "loglistdao.h"
-#include "txtloglistdao.h"
-
+#include "logdao.h"
+#include "txtlogdao.h"
 using std::cout;
 using std::endl;
 using std::string;
@@ -252,17 +251,13 @@ void Window::UpdateLogList(const char *_message){
         char cat[2500];
         strcpy(cat,strcat(date, message));
         cout <<"concatenar " << cat << endl;
-
         strcpy(logs, cat);
         QListWidgetItem * item = new QListWidgetItem(logs);
         ui->listWidgetLogs->addItem(item);
-
-
+        saveLog(&txtLogDao, newlog);
+        saveLog(&csvLogDao, newlog);
 }
 
-void Window::on_pushButtonSaveLogTxt_clicked()
-{
-//    TXTLogListDAO txtLogListDAO;
-//    txtLogListDAO.save(logList);
-    logList->SaveLogs();
+void Window::saveLog(LogDao *_logDao, Log *_log){
+    _logDao->save(_log);
 }

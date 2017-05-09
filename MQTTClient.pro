@@ -36,8 +36,9 @@ SOURCES += main.cpp\
     #apisingleton.cpp
     loglist.cpp \
     log.cpp \
-    loglistdao.cpp \
-    txtloglistdao.cpp
+    logdao.cpp \
+    txtlogdao.cpp \
+    csvlogdao.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -51,8 +52,9 @@ HEADERS  += window.h \
     loglist.h \
     log.h \
     date.h \
-    loglistdao.h \
-    txtloglistdao.h
+    logdao.h \
+    txtlogdao.h \
+    csvlogdao.h
 
 FORMS    += window.ui
 

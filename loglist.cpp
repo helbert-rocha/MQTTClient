@@ -27,6 +27,7 @@ void LogList::AddLog(Log *log){
 void LogList::SaveLogs(){
     cout << "salvando txt" << endl;
     ofstream SaveList("/Users/helbert/Desktop/loglist.txt", ios::out);
+    ofstream SaveListCSV("/Users/helbert/Desktop/loglist.csv", ios::out);
     if (!SaveList )
      {
         cout << " Arquivo não pode ser aberto " << endl;
@@ -43,19 +44,12 @@ void LogList::SaveLogs(){
     {
         cout << "entrou no while da lista" << endl;
         pLLAux = pEIAux->getInfo();
-        SaveList << pLLAux->GetDate() << "  " << pLLAux->GetMessage() << endl;
+        SaveList << pLLAux->GetDate() << " " << pLLAux->GetMessage() << endl;
+        SaveListCSV << pLLAux->GetDate() << ";" << pLLAux->GetMessage() << endl;
         pEIAux = pEIAux->getNext();
     }
     SaveList.close();
-//csv
-//    ofstream myfile;
-//          myfile.open ("example.csv");
-//          myfile << "This is the first cell in the first column.\n";
-//          myfile << "a,b,c,\n";
-//          myfile << "c,s,v,\n";
-//          myfile << "1,2,3.456\n";
-//          myfile << "semi;colon";
-//          myfile.close();
+    SaveListCSV.close();
 }
 
 void LogList::RecoverLogs()
