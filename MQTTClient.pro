@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     #client.cpp \
     subscribe.cpp \
     brokerstatus.cpp \
-    utils.cpp \
     mosquittoapi.cpp \
     element.cpp \
     list.cpp \
@@ -39,7 +38,8 @@ SOURCES += main.cpp\
     logdao.cpp \
     txtlogdao.cpp \
     csvlogdao.cpp \
-    jsonlogdao.cpp
+    jsonlogdao.cpp \
+    utils.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -56,7 +56,8 @@ HEADERS  += window.h \
     logdao.h \
     txtlogdao.h \
     csvlogdao.h \
-    jsonlogdao.h
+    jsonlogdao.h \
+    utils.h
 
 FORMS    += window.ui
 

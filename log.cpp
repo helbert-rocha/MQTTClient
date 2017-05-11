@@ -6,6 +6,7 @@ using std::cout;
 using std::endl;
 using namespace date;
 using namespace std::chrono;
+
 Log::Log(char *_message){
 
     std::string s = date::format("%F %T", std::chrono::system_clock::now());

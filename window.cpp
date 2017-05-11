@@ -234,14 +234,10 @@ void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
 
 void Window::UpdateLogList(const char *_message){
 
-        //    QListWidgetItem * item = new QListWidgetItem(_message);
-        //    ui->listWidget->addItem(item);
         cout << "update log" << endl;
         Log *newlog = new Log(strdup(_message));
         cout << "volta depois de criar"<< endl;
         logList->AddLog(newlog);
-            //    log = new Log("teste");
-        //    logList->ListLogs();
         char logs[3000];
         char date[50];
         strcpy(date,newlog->GetDate());

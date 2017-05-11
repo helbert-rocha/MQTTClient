@@ -1,8 +1,4 @@
 #include "brokerstatus.h"
-#include <iostream>
-#include <stdio.h>
-#include <string.h>
-#include "utils.cpp"
 
 /*Para pegar informações do broker é necessário
  *ter um cliente para subscrever nos tópicos de interesse,
@@ -48,7 +44,7 @@ bool BrokerStatus::UnsubscribeTopic(int *mid, const char *_topic){
 
 void BrokerStatus::on_message(const mosquitto_message *message){
     char newMessage[256];
-    strcpy(newMessage, ConvertToChar(message->payload));
+    strcpy(newMessage, Utils::ConvertToChar(message->payload));
 
     if (0==strcmp(message->topic, brokerVersion))
     {

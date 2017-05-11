@@ -1,7 +1,9 @@
 #ifndef MOSQUITTOAPI_H
 #define MOSQUITTOAPI_H
 #include <mosquittopp.h>
+#include <iostream>
 #include "window.h"
+#include "utils.h"
 class Window;
 class MosquittoAPI: public mosqpp::mosquittopp
 {

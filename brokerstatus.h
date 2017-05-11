@@ -2,6 +2,10 @@
 #define BROKERSTATUS_H
 #include <mosquittopp.h>
 #include "window.h"
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include "utils.h"
 class Window;
 
 class BrokerStatus:public mosqpp::mosquittopp
