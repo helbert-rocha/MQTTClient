@@ -256,6 +256,7 @@ void Window::UpdateLogList(const char *_message){
         ui->listWidgetLogs->addItem(item);
         saveLog(&txtLogDao, newlog);
         saveLog(&csvLogDao, newlog);
+        saveLog(&jsonLogDao, newlog);
 }
 
 void Window::saveLog(LogDao *_logDao, Log *_log){

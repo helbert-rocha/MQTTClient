@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     log.cpp \
     logdao.cpp \
     txtlogdao.cpp \
-    csvlogdao.cpp
+    csvlogdao.cpp \
+    jsonlogdao.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -54,7 +55,8 @@ HEADERS  += window.h \
     date.h \
     logdao.h \
     txtlogdao.h \
-    csvlogdao.h
+    csvlogdao.h \
+    jsonlogdao.h
 
 FORMS    += window.ui
 
@@ -72,3 +74,9 @@ else:unix: LIBS += -L$$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/lib/ -l
 INCLUDEPATH += $$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/include
 DEPENDPATH += $$PWD/../../../../usr/local/Cellar/mosquitto/1.4.11/include
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../usr/local/Cellar/jsoncpp/1.8.0/lib/release/ -ljsoncpp.1.8.0
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../usr/local/Cellar/jsoncpp/1.8.0/lib/debug/ -ljsoncpp.1.8.0
+else:unix: LIBS += -L$$PWD/../../../../usr/local/Cellar/jsoncpp/1.8.0/lib/ -ljsoncpp.1.8.0
+
+INCLUDEPATH += $$PWD/../../../../usr/local/Cellar/jsoncpp/1.8.0/include
+DEPENDPATH += $$PWD/../../../../usr/local/Cellar/jsoncpp/1.8.0/include

@@ -12,6 +12,8 @@
 #include "logdao.h"
 #include "txtlogdao.h"
 #include "csvlogdao.h"
+#include "jsonlogdao.h"
+
 class Publish;
 class Subscribe;
 class BrokerStatus;
@@ -55,6 +57,8 @@ private:
     LogDao *logDao;
     TXTLogDao txtLogDao;
     CSVLogDao csvLogDao;
+    JsonLogDao jsonLogDao;
+
     const char *_host;
     int _port;
     void saveLog(LogDao *logDao, Log *_log);
