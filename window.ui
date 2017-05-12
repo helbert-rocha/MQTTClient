@@ -592,7 +592,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Total de Cleintes :</string>
+        <string>Total de Clientes :</string>
        </property>
       </widget>
       <widget class="QLabel" name="labelTotalClients">

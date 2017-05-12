@@ -6,12 +6,16 @@ using std::cout;
 using std::endl;
 using namespace date;
 using namespace std::chrono;
-
+#include <QTime>
 Log::Log(char *_message){
 
-    std::string s = date::format("%F %T", std::chrono::system_clock::now());
-    strcpy(date, s.c_str());
-    cout << "time " << s << endl;
+//    std::string s = date::format("%F %T", std::chrono::system_clock::now());
+//     std::string s = date::format("%F %T", std::chrono::system_clock::now());
+    const QDateTime now = QDateTime::currentDateTime();
+    const QString timestamp = now.toString(QLatin1String("dd-MM-yyyy hhmmsszzzzz"));
+    strcpy(date, timestamp.toStdString().c_str());
+
+    cout << "time " << date << endl;
     cout << "string " << _message << endl;
     strcpy(message, _message);
 }
