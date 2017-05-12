@@ -13,10 +13,14 @@
 #include "txtlogdao.h"
 #include "csvlogdao.h"
 #include "jsonlogdao.h"
+#include "loggraph.h"
+#include "q0loggraph.h"
 
 class Publish;
 class Subscribe;
 class BrokerStatus;
+class LogGraph;
+class Q0LogGraph;
 
 namespace Ui {
 class Window;
@@ -47,6 +51,8 @@ private slots:
 
     void on_pushButtonStatusStop_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Window *ui;
     Publish *publish;
@@ -58,6 +64,8 @@ private:
     TXTLogDao txtLogDao;
     CSVLogDao csvLogDao;
     JsonLogDao jsonLogDao;
+    LogGraph *logGraph;
+//    Q0LogGraph *q0LogGraph;
 
     const char *_host;
     int _port;
@@ -67,7 +75,6 @@ private:
     void DisableComponents();
     void EnableConnectComponents();
     void DisableConnectComponents();
-
 };
 
 #endif // WINDOW_H

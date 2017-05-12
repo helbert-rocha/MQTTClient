@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = MQTTClient
 TEMPLATE = app
@@ -39,7 +39,10 @@ SOURCES += main.cpp\
     txtlogdao.cpp \
     csvlogdao.cpp \
     jsonlogdao.cpp \
-    utils.cpp
+    utils.cpp \
+    loggraph.cpp \
+    qcustomplot.cpp \
+    q0loggraph.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -57,7 +60,10 @@ HEADERS  += window.h \
     txtlogdao.h \
     csvlogdao.h \
     jsonlogdao.h \
-    utils.h
+    utils.h \
+    loggraph.h \
+    qcustomplot.h \
+    q0loggraph.h
 
 FORMS    += window.ui
 

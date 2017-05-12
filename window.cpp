@@ -51,6 +51,7 @@ void Window::on_pushButtonConnect_clicked()
     logList = new LogList();
     logList->AddLog(log);
     logList->ListLogs();
+//    q0LogGraph->SetWindow(ui);
     EnableComponents();
 }
 
@@ -148,6 +149,7 @@ void Window::on_pushButtonSubscribe_clicked()
 
 
 
+
 //    QWidget *widgetTopic = new QWidget();
 //    widgetTopic->x = 10;
 //    widgetTopic->y = 70;
@@ -170,6 +172,7 @@ void Window::on_pushButtonSubscribe_clicked()
 
     QListWidgetItem * item = new QListWidgetItem(_topic);
     ui->listWidgetTopics->addItem(item);
+    ui->pushButtonSubscribe->setEnabled(false);
 }
 
 void Window::on_pushButtonUnsubscribe_clicked()
@@ -179,6 +182,7 @@ void Window::on_pushButtonUnsubscribe_clicked()
     subscribe->UnsubscribeTopic(NULL, _topic);
     ui->listWidgetTopics->clear();
     ui->listWidgetMessages->clear();
+    ui->pushButtonSubscribe->setEnabled(true);
 }
 
 void Window::on_pushButtonStatusStart_clicked()
@@ -253,8 +257,25 @@ void Window::UpdateLogList(const char *_message){
         saveLog(&txtLogDao, newlog);
         saveLog(&csvLogDao, newlog);
         saveLog(&jsonLogDao, newlog);
+//        q0LogGraph->Plot(newlog);
 }
 
 void Window::saveLog(LogDao *_logDao, Log *_log){
     _logDao->save(_log);
+
+}
+
+void Window::on_pushButton_clicked()
+{
+
+    QCPBars *myBars = new QCPBars(ui->widgetGraphQ0->xAxis, ui->widgetGraphQ0->yAxis);
+    // now we can modify properties of myBars:
+    myBars->setName("Bars Series 1");
+    QVector<double> keyData;
+    QVector<double> valueData;
+    keyData << 1 << 2 << 3;
+    valueData << 2 << 4 << 8;
+    myBars->setData(keyData, valueData);
+    ui->widgetGraphQ0->rescaleAxes();
+    ui->widgetGraphQ0->replot();
 }
