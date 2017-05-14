@@ -29,6 +29,12 @@ Window::~Window()
     delete brokerStatus;
     delete mosquittoAPI;
     delete logList;
+    delete logDao;
+    delete logGraph;
+    delete pointLogGraph;
+    delete barLogGraph;
+    delete linesLogGraph;
+    delete bar;
 }
 
 void Window::on_pushButtonConnect_clicked()
@@ -230,48 +236,51 @@ void Window::UpdateLogList(const char *_message){
     saveLog(&csvLogDao, newlog);
     saveLog(&jsonLogDao, newlog);
 
-    int qos0 = strstr(newlog->GetMessage(), "q0") != NULL;
-    int qos1 = strstr(newlog->GetMessage(), "q1") != NULL;
-    int qos2 = strstr(newlog->GetMessage(), "q2") != NULL;
-    int sendPub = strstr(newlog->GetMessage(), "sending PUBLISH") != NULL;
-    int getRec = strstr(newlog->GetMessage(), "received PUBLISH") != NULL;
-    int sendPuback = strstr(newlog->GetMessage(), "sending PUBACK") != NULL;
-    int sendPubcomp = strstr(newlog->GetMessage(), "sending PUBCOMP") != NULL;
+    int systemFile = strstr(newlog->GetMessage(), "$SYS/broker/") != NULL;
+    if (systemFile != 1){
+        int qos0 = strstr(newlog->GetMessage(), "q0") != NULL;
+        int qos1 = strstr(newlog->GetMessage(), "q1") != NULL;
+        int qos2 = strstr(newlog->GetMessage(), "q2") != NULL;
+        int sendPub = strstr(newlog->GetMessage(), "sending PUBLISH") != NULL;
+        int getRec = strstr(newlog->GetMessage(), "received PUBLISH") != NULL;
+        int sendPuback = strstr(newlog->GetMessage(), "sending PUBACK") != NULL;
+        int sendPubcomp = strstr(newlog->GetMessage(), "sending PUBCOMP") != NULL;
 
-    if(sendPub == 1){
-        timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-        payload = Utils::GetPayloadSize(newlog->GetMessage());
-        if (qos0 == 1){
-            qos = 0;
-        }else if (qos1 == 1){
-            qos = 1;
-        }else if (qos2 == 1){
-            qos = 2;
+        if(sendPub == 1){
+            timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+            payload = Utils::GetPayloadSize(newlog->GetMessage());
+            if (qos0 == 1){
+                qos = 0;
+            }else if (qos1 == 1){
+                qos = 1;
+            }else if (qos2 == 1){
+                qos = 2;
+            }
+            sendPub = 0;
+        }else if(getRec == 1 && qos == 0){
+            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+            cout << ">>>>>> resultado payload " << payload << endl;
+            cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+        } else if(sendPuback == 1 && qos == 1){
+            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+             cout << ">>>>>> resultado payload " << payload << endl;
+             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+             sendPuback = 0;
+        }else if(sendPubcomp == 1 && qos == 2){
+            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+             cout << ">>>>>> resultado payload " << payload << endl;
+             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+             sendPubcomp = 0;
         }
-        sendPub = 0;
-    }else if(getRec == 1 && qos == 0){
-        timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-        cout << ">>>>>> resultado payload " << payload << endl;
-        cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-        UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-        UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-        UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
-    } else if(sendPuback == 1 && qos == 1){
-        timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-         cout << ">>>>>> resultado payload " << payload << endl;
-         cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
-         sendPuback = 0;
-    }else if(sendPubcomp == 1 && qos == 2){
-        timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-         cout << ">>>>>> resultado payload " << payload << endl;
-         cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
-         sendPubcomp = 0;
     }
 }
 
