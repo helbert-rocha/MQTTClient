@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     utils.cpp \
     loggraph.cpp \
     qcustomplot.cpp \
-    q0loggraph.cpp
+    pointloggraph.cpp \
+    barloggraph.cpp \
+    linesloggraph.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -63,7 +65,9 @@ HEADERS  += window.h \
     utils.h \
     loggraph.h \
     qcustomplot.h \
-    q0loggraph.h
+    pointloggraph.h \
+    barloggraph.h \
+    linesloggraph.h
 
 FORMS    += window.ui
 

@@ -1,7 +1,5 @@
 #include "utils.h"
-#include <iostream>
-#include <stdio.h>
-#include <string.h>
+
 
 using std::cout;
 using std::endl;
@@ -18,4 +16,14 @@ char* Utils::ConvertToChar(const void *payload){
     memcpy(buf, payload, 255*sizeof(char));
     cout <<  "buffer " << buf << endl;
     return buf;
+}
+
+int Utils::GetPayloadSize(string message)
+{
+    size_t last_index = message.find_last_of("/((");
+    string result = message.substr(last_index+1);
+    std::istringstream iss(result);
+    int payload;
+    iss >> payload;
+    return payload;
 }

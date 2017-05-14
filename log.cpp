@@ -12,7 +12,7 @@ Log::Log(char *_message){
 //    std::string s = date::format("%F %T", std::chrono::system_clock::now());
 //     std::string s = date::format("%F %T", std::chrono::system_clock::now());
     const QDateTime now = QDateTime::currentDateTime();
-    const QString timestamp = now.toString(QLatin1String("dd-MM-yyyy hhmmsszzzzz"));
+    const QString timestamp = now.toString(QLatin1String("dd-MM-yyyy hhmmsszzz"));
     strcpy(date, timestamp.toStdString().c_str());
 
     cout << "time " << date << endl;

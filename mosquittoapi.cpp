@@ -51,8 +51,9 @@ void MosquittoAPI::on_message(const mosquitto_message *message)
 {
     char newMessage[256];
     strcpy(newMessage, Utils::ConvertToChar(message->payload));
+
     window->UpdateMessageList(message->topic, newMessage, message->qos);
-    cout << "mensagem da API: "<< newMessage << "payload " << message->payload << " com topico " << message->topic << endl;
+    cout << "mensagem da API: "<< newMessage << "payloaden " << message->payloadlen << " com topico " << message->topic << endl;
 }
 
 void MosquittoAPI::on_log(int level, const char *string)

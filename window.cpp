@@ -10,6 +10,7 @@
 using std::cout;
 using std::endl;
 using std::string;
+#include <QTime>
 
 Window::Window(QWidget *parent) :
     QMainWindow(parent),
@@ -33,26 +34,8 @@ Window::~Window()
 
 void Window::on_pushButtonConnect_clicked()
 {
-    string address = ui->lineEditBrokerAddress->text().toStdString();
-    const char *add = address.c_str();
-    int port = ui->lineEditBrokerPort->text().toInt();
-    cout << "Endereço: " << add << endl;
-    cout << "Porta: " << port << endl;
-    DisableConnectComponents();
-    mosquittoAPI = new MosquittoAPI(add, port);
-    mosquittoAPI->SetWindow(this);
-    publish = new Publish();
-    publish->setMosquittoAPI(mosquittoAPI);
-    subscribe = new Subscribe();
-    subscribe->setMosquittoAPI(mosquittoAPI);
-    brokerStatus = new BrokerStatus(add, port);
-    brokerStatus->SetWindow(this);
-    Log *log = new Log("Start the program");
-    logList = new LogList();
-    logList->AddLog(log);
-    logList->ListLogs();
-//    q0LogGraph->SetWindow(ui);
-    EnableComponents();
+   Initialize();
+
 }
 
 void Window::on_pushButtonDisconnect_clicked()
@@ -132,6 +115,11 @@ void Window::DisableConnectComponents()
     ui->pushButtonConnect->setEnabled(false);
 }
 
+void Window::UpdateGraph(double x, double y, LogGraph *logGraph)
+{
+    logGraph->Plot(x, y);
+}
+
 void Window::on_pushButtonSubscribe_clicked()
 {
     string topic = ui->comboBoxSubscribeTopic->currentText().toStdString();
@@ -146,29 +134,6 @@ void Window::on_pushButtonSubscribe_clicked()
     }else{
         subscribe->SubscribeTopic(NULL, _topic, 2);
     }
-
-
-
-
-//    QWidget *widgetTopic = new QWidget();
-//    widgetTopic->x = 10;
-//    widgetTopic->y = 70;
-//    widgetTopic->width = 254;
-//    widgetTopic->height = 80;
-
-//    Qlabel labelTopicName = new QLabel();
-//    labelTopicName.x = 20;
-//    labelTopicName.y = 10;
-//    labelTopicName.width = 60;
-//    labelTopicName.height = 16;
-//    labelTopicName.text = _topic;
-
-//    QLabel labelTopicElements = new QLabel();
-//    labelTopicElements.x = 180;
-//    labelTopicElements.y = 10;
-//    labelTopicElements.width = 60;
-//    labelTopicElements.height = 16;
-//    labelTopicElements.text = "1";
 
     QListWidgetItem * item = new QListWidgetItem(_topic);
     ui->listWidgetTopics->addItem(item);
@@ -232,7 +197,14 @@ void Window::GetBrokerInfos(){
 }
 
 void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
-    QListWidgetItem * item = new QListWidgetItem(_message);
+    const QDateTime now = QDateTime::currentDateTime();
+    const QString timestamp = now.toString(QLatin1String("dd-MM-yyyy hhmmsszzz"));
+    char date[50];
+    char messages[2000];
+    strcpy(date, timestamp.toStdString().c_str());
+    strcat(date, " ");
+    strcpy(messages, strcat(date, _message));
+    QListWidgetItem * item = new QListWidgetItem(messages);
     ui->listWidgetMessages->addItem(item);
 }
 
@@ -257,25 +229,62 @@ void Window::UpdateLogList(const char *_message){
         saveLog(&txtLogDao, newlog);
         saveLog(&csvLogDao, newlog);
         saveLog(&jsonLogDao, newlog);
-//        q0LogGraph->Plot(newlog);
+
+        int sendPub = strstr(newlog->GetMessage(), "sending PUBLISH") != NULL;
+        int getRec = strstr(newlog->GetMessage(), "received PUBLISH") != NULL;
+
+        if(sendPub == 1){
+            timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+        }else if(getRec == 1){
+            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+//            string teste = newlog->GetMessage();
+//            size_t last_index = teste.find_last_of("/((");
+//            string result = teste.substr(last_index+1);
+//            std::istringstream iss(result);
+//            int payload;
+//            iss >> payload;
+            int payload = Utils::GetPayloadSize(newlog->GetMessage());
+            cout << ">>>>>> resultado payload " << payload << endl;
+            cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+        }
+
 }
 
 void Window::saveLog(LogDao *_logDao, Log *_log){
     _logDao->save(_log);
-
 }
 
-void Window::on_pushButton_clicked()
+void Window::Initialize()
 {
-
-    QCPBars *myBars = new QCPBars(ui->widgetGraphQ0->xAxis, ui->widgetGraphQ0->yAxis);
-    // now we can modify properties of myBars:
-    myBars->setName("Bars Series 1");
-    QVector<double> keyData;
-    QVector<double> valueData;
-    keyData << 1 << 2 << 3;
-    valueData << 2 << 4 << 8;
-    myBars->setData(keyData, valueData);
-    ui->widgetGraphQ0->rescaleAxes();
-    ui->widgetGraphQ0->replot();
+    string address = ui->lineEditBrokerAddress->text().toStdString();
+    const char *add = address.c_str();
+    int port = ui->lineEditBrokerPort->text().toInt();
+    cout << "Endereço: " << add << endl;
+    cout << "Porta: " << port << endl;
+    DisableConnectComponents();
+    mosquittoAPI = new MosquittoAPI(add, port);
+    mosquittoAPI->SetWindow(this);
+    publish = new Publish();
+    publish->setMosquittoAPI(mosquittoAPI);
+    subscribe = new Subscribe();
+    subscribe->setMosquittoAPI(mosquittoAPI);
+    brokerStatus = new BrokerStatus(add, port);
+    brokerStatus->SetWindow(this);
+    Log *log = new Log("Start the program");
+    logList = new LogList();
+    logList->AddLog(log);
+    logList->ListLogs();
+    pointLogGraph = new PointLogGraph();
+    pointLogGraph->SetWindow(this);
+    barLogGraph = new BarLogGraph();
+    barLogGraph->SetWindow(this);
+    linesLogGraph = new LinesLogGraph();
+    linesLogGraph->setWindow(this);
+    EnableComponents();
 }
+
+
+

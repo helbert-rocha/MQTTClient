@@ -14,13 +14,18 @@
 #include "csvlogdao.h"
 #include "jsonlogdao.h"
 #include "loggraph.h"
-#include "q0loggraph.h"
+#include "pointloggraph.h"
+#include "barloggraph.h"
+#include "linesloggraph.h"
 
 class Publish;
 class Subscribe;
 class BrokerStatus;
 class LogGraph;
-class Q0LogGraph;
+class PointLogGraph;
+class BarLogGraph;
+class LinesLogGraph;
+class Log;
 
 namespace Ui {
 class Window;
@@ -32,6 +37,8 @@ class Window : public QMainWindow
 
 public:
      explicit Window(QWidget *parent = 0);
+    Ui::Window *ui;
+    QCPBars *bar;
     ~Window();
     void GetBrokerInfos();
     void UpdateMessageList(char *_topic, char *_message, int _qos);
@@ -51,10 +58,8 @@ private slots:
 
     void on_pushButtonStatusStop_clicked();
 
-    void on_pushButton_clicked();
 
 private:
-    Ui::Window *ui;
     Publish *publish;
     Subscribe *subscribe;
     BrokerStatus *brokerStatus;
@@ -65,16 +70,22 @@ private:
     CSVLogDao csvLogDao;
     JsonLogDao jsonLogDao;
     LogGraph *logGraph;
-//    Q0LogGraph *q0LogGraph;
+    PointLogGraph *pointLogGraph;
+    BarLogGraph *barLogGraph;
+    LinesLogGraph *linesLogGraph;
 
+    QVector<double> qv_x, qv_y;
     const char *_host;
     int _port;
+    QDateTime timeSend;
+    QDateTime timeReceive;
     void saveLog(LogDao *logDao, Log *_log);
-
+    void Initialize();
     void EnableComponents();
     void DisableComponents();
     void EnableConnectComponents();
     void DisableConnectComponents();
+    void UpdateGraph(double x, double y, LogGraph *logGraph);
 };
 
 #endif // WINDOW_H
