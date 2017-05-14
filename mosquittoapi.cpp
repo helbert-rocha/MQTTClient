@@ -51,9 +51,72 @@ void MosquittoAPI::on_message(const mosquitto_message *message)
 {
     char newMessage[256];
     strcpy(newMessage, Utils::ConvertToChar(message->payload));
+    int systemFile = strstr(message->topic, "$SYS/broker/") != NULL;
+    cout << "mensagem da API: "<< newMessage << " payloaden " << message->payloadlen << " com topico " << message->topic << endl;
+    if (systemFile == 1){
+        if (0==strcmp(message->topic, brokerStatus->brokerVersion))
+        {
+            brokerStatus->SetVersion(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokertUptime))
+        {
+            brokerStatus->SetUptime(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerTimestamp))
+        {
+            brokerStatus->SetTimestamp(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerSubscriptions))
+        {
+            brokerStatus->SetSubscriptions(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerClientsConnected))
+        {
+            brokerStatus->SetClientsConnected(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerClientsDisconnected))
+        {
+            brokerStatus->SetClientsDisconnected(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerClientsExpired))
+        {
+            brokerStatus->SetClientsExpired(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerClientsMaximum))
+        {
+            brokerStatus->SetClientsMaximum(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerClientsTotal))
+        {
+            brokerStatus->SetClientsTotal(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerMessageSent))
+        {
+            brokerStatus->SetMessageSent(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerMessageReceived))
+        {
+            brokerStatus->SetMessageReceived(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerMessageStored))
+        {
+            brokerStatus->SetMessageStored(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerBytesSent))
+        {
+            brokerStatus->SetBytesSent(newMessage);
+        }
+        else if (0 == strcmp(message->topic, brokerStatus->brokerBytesReceived))
+        {
+            brokerStatus->SetBytesReceived(newMessage);
+        }
+        window->GetBrokerInfos();
+        systemFile = 0;
 
-    window->UpdateMessageList(message->topic, newMessage, message->qos);
-    cout << "mensagem da API: "<< newMessage << "payloaden " << message->payloadlen << " com topico " << message->topic << endl;
+    }else{
+        window->UpdateMessageList(message->topic, newMessage, message->qos);
+    }
+
 }
 
 void MosquittoAPI::on_log(int level, const char *string)
@@ -63,6 +126,7 @@ void MosquittoAPI::on_log(int level, const char *string)
    const int existConnack = strstr(string, "CONNACK") != NULL;
    const int existPingreq = strstr(string, "PINGREQ") != NULL;
    const int existPingresp = strstr(string, "PINGRESP") != NULL;
+//   int systemFile = strstr(string, "$SYS/broker/") != NULL;
    if(existConnect!=1 && existConnack!=1 && existPingreq!=1 && existPingresp!=1){
      window->UpdateLogList(string);
    }
@@ -85,4 +149,9 @@ bool MosquittoAPI::UnsubscribeTopic(int *_mid, const char *_topic)
 
 void MosquittoAPI::SetWindow(Window *_window){
     window = _window;
+}
+
+void MosquittoAPI::SetBrokerStatus(BrokerStatus *_brokerStatus)
+{
+    brokerStatus = _brokerStatus;
 }

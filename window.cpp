@@ -40,7 +40,7 @@ void Window::on_pushButtonConnect_clicked()
 void Window::on_pushButtonDisconnect_clicked()
 {
     mosquittoAPI->disconnect();
-    brokerStatus->disconnect();
+//    brokerStatus->disconnect();
     DisableComponents();
     EnableConnectComponents();
 }
@@ -238,9 +238,6 @@ void Window::UpdateLogList(const char *_message){
     int sendPuback = strstr(newlog->GetMessage(), "sending PUBACK") != NULL;
     int sendPubcomp = strstr(newlog->GetMessage(), "sending PUBCOMP") != NULL;
 
-
-    cout << "tipo de qos: " << qos << endl;
-
     if(sendPub == 1){
         timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
         payload = Utils::GetPayloadSize(newlog->GetMessage());
@@ -296,8 +293,10 @@ void Window::Initialize()
     publish->setMosquittoAPI(mosquittoAPI);
     subscribe = new Subscribe();
     subscribe->setMosquittoAPI(mosquittoAPI);
-    brokerStatus = new BrokerStatus(add, port);
+    brokerStatus = new BrokerStatus();
     brokerStatus->SetWindow(this);
+    brokerStatus->SetMosquittoAPI(mosquittoAPI);
+    mosquittoAPI->SetBrokerStatus(brokerStatus);
     Log *log = new Log("Start the program");
     logList = new LogList();
     logList->AddLog(log);
