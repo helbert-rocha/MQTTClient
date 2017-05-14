@@ -20,7 +20,6 @@ Window::Window(QWidget *parent) :
 
 }
 
-
 Window::~Window()
 {
     delete ui;
