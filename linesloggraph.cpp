@@ -37,7 +37,9 @@ void LinesLogGraph::Clear()
 {
     qv_x.clear();
     qv_y.clear();
-    win->ui->widgetGraph3->clearGraphs();
+    win->ui->widgetGraph3->clearItems();
+    win->ui->widgetGraph3->rescaleAxes();
+    win->ui->widgetGraph3->replot();
 }
 
 void LinesLogGraph::setWindow(Window *_win)

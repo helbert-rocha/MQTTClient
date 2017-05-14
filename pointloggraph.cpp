@@ -47,7 +47,9 @@ void PointLogGraph::Clear()
 {
     qv_x.clear();
     qv_y.clear();
-    win->ui->widgetGraph1->clearGraphs();
+    win->ui->widgetGraph1->clearItems();
+    win->ui->widgetGraph1->rescaleAxes();
+    win->ui->widgetGraph1->replot();
 }
 
 

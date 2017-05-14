@@ -31,7 +31,9 @@ void BarLogGraph::Clear()
 {
     qv_x.clear();
     qv_y.clear();
-    win->ui->widgetGraph2->clearGraphs();
+    win->ui->widgetGraph2->clearItems();
+    win->ui->widgetGraph2->rescaleAxes();
+    win->ui->widgetGraph2->replot();
 }
 
 void BarLogGraph::SetWindow(Window *_win)

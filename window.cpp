@@ -148,6 +148,9 @@ void Window::on_pushButtonUnsubscribe_clicked()
     ui->listWidgetTopics->clear();
     ui->listWidgetMessages->clear();
     ui->pushButtonSubscribe->setEnabled(true);
+    pointLogGraph->Clear();
+    barLogGraph->Clear();
+    linesLogGraph->Clear();
 }
 
 void Window::on_pushButtonStatusStart_clicked()
@@ -230,26 +233,53 @@ void Window::UpdateLogList(const char *_message){
         saveLog(&csvLogDao, newlog);
         saveLog(&jsonLogDao, newlog);
 
+        int qos0 = strstr(newlog->GetMessage(), "q0") != NULL;
+        int qos1 = strstr(newlog->GetMessage(), "q1") != NULL;
+        int qos2 = strstr(newlog->GetMessage(), "q2") != NULL;
         int sendPub = strstr(newlog->GetMessage(), "sending PUBLISH") != NULL;
         int getRec = strstr(newlog->GetMessage(), "received PUBLISH") != NULL;
+        int sendPuback = strstr(newlog->GetMessage(), "sending PUBACK") != NULL;
+        int sendPubcomp = strstr(newlog->GetMessage(), "sending PUBCOMP") != NULL;
+        int payload;
+        int typesend;
+        if (qos0==1){
+            typesend = 0;
+        }else if (qos1== 1){
+            typesend = 1;
+        }else if (qos2 == 1){
+            typesend = 2;
+        }
+        cout << "tipo de qos: " << typesend << endl;
 
         if(sendPub == 1){
             timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-        }else if(getRec == 1){
+        }else if(getRec == 1 && typesend == 0){
             timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-//            string teste = newlog->GetMessage();
-//            size_t last_index = teste.find_last_of("/((");
-//            string result = teste.substr(last_index+1);
-//            std::istringstream iss(result);
-//            int payload;
-//            iss >> payload;
             int payload = Utils::GetPayloadSize(newlog->GetMessage());
             cout << ">>>>>> resultado payload " << payload << endl;
             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+        }else if(sendPuback == 1 && typesend == 1){
+            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+             payload = Utils::GetPayloadSize(newlog->GetMessage());
+             cout << ">>>>>> resultado payload " << payload << endl;
+             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+        }else if(sendPubcomp == 1 && typesend == 2){
+            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+             payload = Utils::GetPayloadSize(newlog->GetMessage());
+             cout << ">>>>>> resultado payload " << payload << endl;
+             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
         }
+
+
 
 }
 
