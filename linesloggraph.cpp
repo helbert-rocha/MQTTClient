@@ -15,7 +15,6 @@ LinesLogGraph::~LinesLogGraph()
 
 void LinesLogGraph::Initialize()
 {
-    cout << "criou o grafico" << endl;
     win->ui->widgetGraph3->addGraph();
     win->ui->widgetGraph3->graph(0)->setScatterStyle(QCPScatterStyle::ssDisc);
     win->ui->widgetGraph3->graph(0)->setLineStyle(QCPGraph::lsLine);
@@ -25,7 +24,6 @@ void LinesLogGraph::Initialize()
 
 void LinesLogGraph::Plot(double x, double y)
 {
-    cout << "update o gafico lines" << endl;
     qv_x.append(x);
     qv_y.append(y);
     win->ui->widgetGraph3->graph(0)->setData(qv_x, qv_y);

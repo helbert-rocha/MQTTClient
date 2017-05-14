@@ -2,7 +2,6 @@
 
 void JsonLogDao::save(Log *_log){
 
-    cout << "salvando log txt" << endl;
     Json::FastWriter writer;
     ofstream SaveList("/Users/helbert/Desktop/loglist.json", ios::out | ios::app);
     if (!SaveList )

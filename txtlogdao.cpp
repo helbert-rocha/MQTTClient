@@ -1,7 +1,7 @@
 #include "txtlogdao.h"
 
 void TXTLogDao::save(Log *_log){
-    cout << "salvando log txt" << endl;
+
     ofstream SaveList("/Users/helbert/Desktop/loglist.txt", ios::out | ios::app);
     if (!SaveList )
      {

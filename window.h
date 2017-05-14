@@ -73,8 +73,8 @@ private:
     PointLogGraph *pointLogGraph;
     BarLogGraph *barLogGraph;
     LinesLogGraph *linesLogGraph;
-
-    QVector<double> qv_x, qv_y;
+    int qos;
+    int payload;
     const char *_host;
     int _port;
     QDateTime timeSend;

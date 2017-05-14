@@ -15,8 +15,6 @@ Log::Log(char *_message){
     const QString timestamp = now.toString(QLatin1String("dd-MM-yyyy hhmmsszzz"));
     strcpy(date, timestamp.toStdString().c_str());
 
-    cout << "time " << date << endl;
-    cout << "string " << _message << endl;
     strcpy(message, _message);
 }
 

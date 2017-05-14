@@ -1,16 +1,11 @@
 #include "pointloggraph.h"
 
-using std::cout;
-using std::endl;
-
-
 PointLogGraph::PointLogGraph()
 {
 
 }
 
 void PointLogGraph::Plot(double x, double y){
-    cout << "update o gafico" << endl;
     qv_x.append(x);
     qv_y.append(y);
     win->ui->widgetGraph1->graph(0)->setData(qv_x, qv_y);
@@ -27,7 +22,6 @@ void PointLogGraph::SetWindow(Window *_win)
 
 void PointLogGraph::Initialize()
 {
-    cout << "criou o grafico" << endl;
     win->ui->widgetGraph1->addGraph();
     win->ui->widgetGraph1->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
     win->ui->widgetGraph1->graph(0)->setLineStyle(QCPGraph::lsNone);
@@ -40,7 +34,6 @@ void PointLogGraph::Initialize()
 //    gradient.setColorAt(0.38, QColor(200, 200, 200));
 //    gradient.setColorAt(1, QColor(130, 130, 130));
 //     win->ui->widgetGraph1->setBackground(QBrush(gradient));
-    cout << "termino criou o grafico" << endl;
 }
 
 void PointLogGraph::Clear()

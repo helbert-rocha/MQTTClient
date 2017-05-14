@@ -2,7 +2,6 @@
 
 void CSVLogDao::save(Log *_log){
 
-    cout << "salvando log csv" << endl;
     ofstream SaveList("/Users/helbert/Desktop/loglist.csv", ios::out | ios::app);
     if (!SaveList )
      {

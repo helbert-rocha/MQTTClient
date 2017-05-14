@@ -1,6 +1,5 @@
 #include "window.h"
 #include "ui_window.h"
-//#include "utils.h"
 #include <iostream>
 #include <unistd.h>
 #include <string.h>
@@ -183,20 +182,20 @@ void Window::on_pushButtonStatusStop_clicked()
 
 void Window::GetBrokerInfos(){
     cout << "Atualizando informacoes" <<  endl;
-        ui->labelVersion->setText(brokerStatus->GetVersion());
-        ui->labelUptime->setText(brokerStatus->GetUptime());
-        ui->labelTimestamp->setText(brokerStatus->GetTimestamp());
-        ui->labelSubscriptions->setText(brokerStatus->GetSubscriptions());
-        ui->labelClientConnected->setText(brokerStatus->GetClientsConnected());
-        ui->labelClientDisconnected->setText(brokerStatus->GetClientsDisconnected());
-        ui->labelClientExpired->setText(brokerStatus->GetClientsExpired());
-        ui->labelMaxClients->setText(brokerStatus->GetClientsMaximum());
-        ui->labelTotalClients->setText(brokerStatus->GetClientsTotal());
-        ui->labelMessageSent->setText(brokerStatus->GetMessageSent());
-        ui->labelMessageReceived->setText(brokerStatus->GetMessageReceived());
-        ui->labelMessageStored->setText(brokerStatus->GetMessageStored());
-        ui->labelBytesSent->setText(brokerStatus->GetBytesSent());
-        ui->labelBytesReceived->setText(brokerStatus->GetBytesReceived());
+    ui->labelVersion->setText(brokerStatus->GetVersion());
+    ui->labelUptime->setText(brokerStatus->GetUptime());
+    ui->labelTimestamp->setText(brokerStatus->GetTimestamp());
+    ui->labelSubscriptions->setText(brokerStatus->GetSubscriptions());
+    ui->labelClientConnected->setText(brokerStatus->GetClientsConnected());
+    ui->labelClientDisconnected->setText(brokerStatus->GetClientsDisconnected());
+    ui->labelClientExpired->setText(brokerStatus->GetClientsExpired());
+    ui->labelMaxClients->setText(brokerStatus->GetClientsMaximum());
+    ui->labelTotalClients->setText(brokerStatus->GetClientsTotal());
+    ui->labelMessageSent->setText(brokerStatus->GetMessageSent());
+    ui->labelMessageReceived->setText(brokerStatus->GetMessageReceived());
+    ui->labelMessageStored->setText(brokerStatus->GetMessageStored());
+    ui->labelBytesSent->setText(brokerStatus->GetBytesSent());
+    ui->labelBytesReceived->setText(brokerStatus->GetBytesReceived());
 }
 
 void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
@@ -213,74 +212,70 @@ void Window::UpdateMessageList(char *_topic, char *_message, int _qos){
 
 void Window::UpdateLogList(const char *_message){
 
-        cout << "update log" << endl;
-        Log *newlog = new Log(strdup(_message));
-        cout << "volta depois de criar"<< endl;
-        logList->AddLog(newlog);
-        char logs[3000];
-        char date[50];
-        strcpy(date,newlog->GetDate());
-        strcat(date, "  ");
-        char message[2000];
-        strcpy(message, newlog->GetMessage());
-        char cat[2500];
-        strcpy(cat,strcat(date, message));
-        cout <<"concatenar " << cat << endl;
-        strcpy(logs, cat);
-        QListWidgetItem * item = new QListWidgetItem(logs);
-        ui->listWidgetLogs->addItem(item);
-        saveLog(&txtLogDao, newlog);
-        saveLog(&csvLogDao, newlog);
-        saveLog(&jsonLogDao, newlog);
+    cout << "update log" << endl;
+    Log *newlog = new Log(strdup(_message));
+    logList->AddLog(newlog);
+    char logs[3000];
+    char date[50];
+    strcpy(date,newlog->GetDate());
+    strcat(date, "  ");
+    char message[2000];
+    strcpy(message, newlog->GetMessage());
+    char cat[2500];
+    strcpy(cat,strcat(date, message));
+    strcpy(logs, cat);
+    QListWidgetItem * item = new QListWidgetItem(logs);
+    ui->listWidgetLogs->addItem(item);
+    saveLog(&txtLogDao, newlog);
+    saveLog(&csvLogDao, newlog);
+    saveLog(&jsonLogDao, newlog);
 
-        int qos0 = strstr(newlog->GetMessage(), "q0") != NULL;
-        int qos1 = strstr(newlog->GetMessage(), "q1") != NULL;
-        int qos2 = strstr(newlog->GetMessage(), "q2") != NULL;
-        int sendPub = strstr(newlog->GetMessage(), "sending PUBLISH") != NULL;
-        int getRec = strstr(newlog->GetMessage(), "received PUBLISH") != NULL;
-        int sendPuback = strstr(newlog->GetMessage(), "sending PUBACK") != NULL;
-        int sendPubcomp = strstr(newlog->GetMessage(), "sending PUBCOMP") != NULL;
-        int payload;
-        int typesend;
-        if (qos0==1){
-            typesend = 0;
-        }else if (qos1== 1){
-            typesend = 1;
+    int qos0 = strstr(newlog->GetMessage(), "q0") != NULL;
+    int qos1 = strstr(newlog->GetMessage(), "q1") != NULL;
+    int qos2 = strstr(newlog->GetMessage(), "q2") != NULL;
+    int sendPub = strstr(newlog->GetMessage(), "sending PUBLISH") != NULL;
+    int getRec = strstr(newlog->GetMessage(), "received PUBLISH") != NULL;
+    int sendPuback = strstr(newlog->GetMessage(), "sending PUBACK") != NULL;
+    int sendPubcomp = strstr(newlog->GetMessage(), "sending PUBCOMP") != NULL;
+
+
+    cout << "tipo de qos: " << qos << endl;
+
+    if(sendPub == 1){
+        timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+        payload = Utils::GetPayloadSize(newlog->GetMessage());
+        if (qos0 == 1){
+            qos = 0;
+        }else if (qos1 == 1){
+            qos = 1;
         }else if (qos2 == 1){
-            typesend = 2;
+            qos = 2;
         }
-        cout << "tipo de qos: " << typesend << endl;
-
-        if(sendPub == 1){
-            timeSend = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-        }else if(getRec == 1 && typesend == 0){
-            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-            int payload = Utils::GetPayloadSize(newlog->GetMessage());
-            cout << ">>>>>> resultado payload " << payload << endl;
-            cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
-        }else if(sendPuback == 1 && typesend == 1){
-            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-             payload = Utils::GetPayloadSize(newlog->GetMessage());
-             cout << ">>>>>> resultado payload " << payload << endl;
-             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
-        }else if(sendPubcomp == 1 && typesend == 2){
-            timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
-             payload = Utils::GetPayloadSize(newlog->GetMessage());
-             cout << ">>>>>> resultado payload " << payload << endl;
-             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
-        }
-
-
-
+        sendPub = 0;
+    }else if(getRec == 1 && qos == 0){
+        timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+        cout << ">>>>>> resultado payload " << payload << endl;
+        cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+        UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+        UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+        UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+    } else if(sendPuback == 1 && qos == 1){
+        timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+         cout << ">>>>>> resultado payload " << payload << endl;
+         cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+         sendPuback = 0;
+    }else if(sendPubcomp == 1 && qos == 2){
+        timeReceive = QDateTime::fromString(newlog->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
+         cout << ">>>>>> resultado payload " << payload << endl;
+         cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
+         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
+         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
+         UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+         sendPubcomp = 0;
+    }
 }
 
 void Window::saveLog(LogDao *_logDao, Log *_log){
@@ -306,7 +301,6 @@ void Window::Initialize()
     Log *log = new Log("Start the program");
     logList = new LogList();
     logList->AddLog(log);
-    logList->ListLogs();
     pointLogGraph = new PointLogGraph();
     pointLogGraph->SetWindow(this);
     barLogGraph = new BarLogGraph();
