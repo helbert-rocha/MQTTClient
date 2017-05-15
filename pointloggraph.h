@@ -12,6 +12,7 @@ private:
     Window *win;
 public:
     PointLogGraph();
+    ~PointLogGraph();
     void Plot(double x, double y);
     void SetWindow(Window *_win);
     void Initialize();

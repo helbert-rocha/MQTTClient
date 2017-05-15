@@ -5,6 +5,11 @@ PointLogGraph::PointLogGraph()
 
 }
 
+PointLogGraph::~PointLogGraph()
+{
+
+}
+
 void PointLogGraph::Plot(double x, double y){
     qv_x.append(x);
     qv_y.append(y);

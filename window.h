@@ -8,7 +8,6 @@
 #include "brokerstatus.h"
 #include "mosquittoapi.h"
 #include "log.h"
-#include "loglist.h"
 #include "logdao.h"
 #include "txtlogdao.h"
 #include "csvlogdao.h"
@@ -42,7 +41,7 @@ public:
     ~Window();
     void GetBrokerInfos();
     void UpdateMessageList(char *_topic, char *_message, int _qos);
-    void UpdateLogList(const char *_message);
+    void UpdateLogList(Log *log);
 private slots:
     void on_pushButtonConnect_clicked();
 
@@ -64,11 +63,6 @@ private:
     Subscribe *subscribe;
     BrokerStatus *brokerStatus;
     MosquittoAPI *mosquittoAPI;
-    LogList *logList;
-    LogDao *logDao;
-    TXTLogDao txtLogDao;
-    CSVLogDao csvLogDao;
-    JsonLogDao jsonLogDao;
     LogGraph *logGraph;
     PointLogGraph *pointLogGraph;
     BarLogGraph *barLogGraph;
@@ -79,7 +73,7 @@ private:
     int _port;
     QDateTime timeSend;
     QDateTime timeReceive;
-    void saveLog(LogDao *logDao, Log *_log);
+//    void saveLog(LogDao *logDao, Log *_log);
     void Initialize();
     void EnableComponents();
     void DisableComponents();

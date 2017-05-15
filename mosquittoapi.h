@@ -5,6 +5,12 @@
 #include "window.h"
 #include "utils.h"
 #include "brokerstatus.h"
+#include "loglist.h"
+#include "log.h"
+#include "logdao.h"
+#include "txtlogdao.h"
+#include "csvlogdao.h"
+#include "jsonlogdao.h"
 
 class Window;
 class BrokerStatus;
@@ -25,9 +31,16 @@ private:
     void on_log(int level, const char *string);
     Window *window;
     BrokerStatus *brokerStatus;
+    LogList *logList;
+    void SaveLog(LogDao *logDao, Log *log);
+    TXTLogDao txtLogDao;
+    CSVLogDao csvLogDao;
+    JsonLogDao jsonLogDao;
+
 
 public:
     MosquittoAPI(const char *_host, int _port);
+    MosquittoAPI();
     ~MosquittoAPI();
     void SetWindow(Window *_window);
     void SetBrokerStatus(BrokerStatus *brokerStatus);

@@ -11,6 +11,14 @@ MosquittoAPI::MosquittoAPI(const char *_host, int _port)
     this->keepalive = 60;
     this->connect(_host, _port, keepalive);
     this->loop_start();
+    Log *log = new Log("Start the program");
+    logList = new LogList();
+    logList->AddLog(log);
+}
+
+MosquittoAPI::MosquittoAPI()
+{
+    delete logList;
 }
 
 MosquittoAPI::~MosquittoAPI(){
@@ -127,10 +135,22 @@ void MosquittoAPI::on_log(int level, const char *string)
    const int existPingreq = strstr(string, "PINGREQ") != NULL;
    const int existPingresp = strstr(string, "PINGRESP") != NULL;
 //   int systemFile = strstr(string, "$SYS/broker/") != NULL;
+
    if(existConnect!=1 && existConnack!=1 && existPingreq!=1 && existPingresp!=1){
-     window->UpdateLogList(string);
+
+     Log *newLog = new Log(strdup(string));
+     window->UpdateLogList(newLog);
+     logList->AddLog(newLog);
+     SaveLog(&txtLogDao, newLog);
+     SaveLog(&csvLogDao, newLog);
+     SaveLog(&jsonLogDao, newLog);
    }
 
+}
+
+void MosquittoAPI::SaveLog(LogDao *logDao, Log *log)
+{
+    logDao->save(log);
 }
 
 bool MosquittoAPI::PublishMessage(const char *_message, const char *_topic, int _qos){
