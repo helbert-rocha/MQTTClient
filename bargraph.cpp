@@ -1,16 +1,16 @@
-#include "barloggraph.h"
+#include "bargraph.h"
 
-BarLogGraph::BarLogGraph()
+BarGraph::BarGraph()
 {
 
 }
 
-BarLogGraph::~BarLogGraph()
+BarGraph::~BarGraph()
 {
 
 }
 
-void BarLogGraph::Initialize()
+void BarGraph::Initialize()
 {
     win->ui->widgetGraph2->addGraph();
     win->bar = new QCPBars(win->ui->widgetGraph2->xAxis, win->ui->widgetGraph2->yAxis);
@@ -18,7 +18,7 @@ void BarLogGraph::Initialize()
     win->ui->widgetGraph2->yAxis->setLabel("Bytes");
 }
 
-void BarLogGraph::Plot(double x, double y)
+void BarGraph::Plot(double x, double y)
 {
     qv_x.append(x);
     qv_y.append(y);
@@ -27,7 +27,7 @@ void BarLogGraph::Plot(double x, double y)
     win->ui->widgetGraph2->replot();
 }
 
-void BarLogGraph::Clear()
+void BarGraph::Clear()
 {
     qv_x.clear();
     qv_y.clear();
@@ -36,7 +36,7 @@ void BarLogGraph::Clear()
     win->ui->widgetGraph2->replot();
 }
 
-void BarLogGraph::SetWindow(Window *_win)
+void BarGraph::SetWindow(Window *_win)
 {
     win = _win;
     Initialize();

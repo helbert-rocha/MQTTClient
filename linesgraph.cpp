@@ -1,19 +1,19 @@
-#include "linesloggraph.h"
+#include "linesgraph.h"
 using std::cout;
 using std::endl;
 
 
-LinesLogGraph::LinesLogGraph()
+LinesGraph::LinesGraph()
 {
 
 }
 
-LinesLogGraph::~LinesLogGraph()
+LinesGraph::~LinesGraph()
 {
 
 }
 
-void LinesLogGraph::Initialize()
+void LinesGraph::Initialize()
 {
     win->ui->widgetGraph3->addGraph();
     win->ui->widgetGraph3->graph(0)->setScatterStyle(QCPScatterStyle::ssDisc);
@@ -22,7 +22,7 @@ void LinesLogGraph::Initialize()
     win->ui->widgetGraph3->yAxis->setLabel("Bytes");
 }
 
-void LinesLogGraph::Plot(double x, double y)
+void LinesGraph::Plot(double x, double y)
 {
     qv_x.append(x);
     qv_y.append(y);
@@ -31,7 +31,7 @@ void LinesLogGraph::Plot(double x, double y)
     win->ui->widgetGraph3->replot();
 }
 
-void LinesLogGraph::Clear()
+void LinesGraph::Clear()
 {
     qv_x.clear();
     qv_y.clear();
@@ -40,7 +40,7 @@ void LinesLogGraph::Clear()
     win->ui->widgetGraph3->replot();
 }
 
-void LinesLogGraph::setWindow(Window *_win)
+void LinesGraph::setWindow(Window *_win)
 {
     win = _win;
     Initialize();

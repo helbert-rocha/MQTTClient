@@ -4,8 +4,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <list.h>
-#include "logdao.h"
-#include "txtlogdao.h"
 using std::cout;
 using std::endl;
 using std::string;
@@ -27,10 +25,6 @@ Window::~Window()
     delete subscribe;
     delete brokerStatus;
     delete mosquittoAPI;
-    delete logGraph;
-    delete pointLogGraph;
-    delete barLogGraph;
-    delete linesLogGraph;
     delete bar;
 }
 
@@ -116,9 +110,9 @@ void Window::DisableConnectComponents()
     ui->pushButtonConnect->setEnabled(false);
 }
 
-void Window::UpdateGraph(double x, double y, LogGraph *logGraph)
+void Window::UpdateGraph(double x, double y, Graph *graph)
 {
-    logGraph->Plot(x, y);
+    graph->Plot(x, y);
 }
 
 void Window::on_pushButtonSubscribe_clicked()
@@ -149,9 +143,9 @@ void Window::on_pushButtonUnsubscribe_clicked()
     ui->listWidgetTopics->clear();
     ui->listWidgetMessages->clear();
     ui->pushButtonSubscribe->setEnabled(true);
-    pointLogGraph->Clear();
-    barLogGraph->Clear();
-    linesLogGraph->Clear();
+    pointGraph->Clear();
+    barGraph->Clear();
+    linesGraph->Clear();
 }
 
 void Window::on_pushButtonStatusStart_clicked()
@@ -253,24 +247,24 @@ void Window::UpdateLogList(Log *log){
             timeReceive = QDateTime::fromString(log->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
             cout << ">>>>>> resultado payload " << payload << endl;
             cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barGraph);
+            UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesGraph);
         } else if(sendPuback == 1 && qos == 1){
             timeReceive = QDateTime::fromString(log->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
              cout << ">>>>>> resultado payload " << payload << endl;
              cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesGraph);
              sendPuback = 0;
         }else if(sendPubcomp == 1 && qos == 2){
             timeReceive = QDateTime::fromString(log->GetDate(),QLatin1String("dd-MM-yyyy hhmmsszzz"));
              cout << ">>>>>> resultado payload " << payload << endl;
              cout << "converter para date" << timeSend.time().msecsTo(timeReceive.time()) <<endl;
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barLogGraph);
-             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesLogGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, pointGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, barGraph);
+             UpdateGraph((double) timeSend.time().msecsTo(timeReceive.time()), payload, linesGraph);
              sendPubcomp = 0;
         }
     }
@@ -295,12 +289,12 @@ void Window::Initialize()
     brokerStatus->SetWindow(this);
     brokerStatus->SetMosquittoAPI(mosquittoAPI);
     mosquittoAPI->SetBrokerStatus(brokerStatus);
-    pointLogGraph = new PointLogGraph();
-    pointLogGraph->SetWindow(this);
-    barLogGraph = new BarLogGraph();
-    barLogGraph->SetWindow(this);
-    linesLogGraph = new LinesLogGraph();
-    linesLogGraph->setWindow(this);
+    pointGraph = new PointGraph();
+    pointGraph->SetWindow(this);
+    barGraph = new BarGraph();
+    barGraph->SetWindow(this);
+    linesGraph = new LinesGraph();
+    linesGraph->setWindow(this);
     EnableComponents();
 }
 

@@ -1,21 +1,21 @@
-#ifndef BARLOGGRAPH_H
-#define BARLOGGRAPH_H
+#ifndef BARGRAPH_H
+#define BARGRAPH_H
 #include "ui_window.h"
 #include "window.h"
-#include "loggraph.h"
-class LogGraph;
+#include "graph.h"
+class Graph;
 
-class BarLogGraph : public LogGraph
+class BarGraph : public Graph
 {
 private:
     Window *win;
 public:
-    BarLogGraph();
-    ~BarLogGraph();
+    BarGraph();
+    ~BarGraph();
     void Initialize();
     void Plot(double x, double y);
     void Clear();
     void SetWindow(Window *win);
 };
 
-#endif // BARLOGGRAPH_H
+#endif // BARGRAPH_H

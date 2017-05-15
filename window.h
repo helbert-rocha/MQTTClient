@@ -12,18 +12,18 @@
 #include "txtlogdao.h"
 #include "csvlogdao.h"
 #include "jsonlogdao.h"
-#include "loggraph.h"
-#include "pointloggraph.h"
-#include "barloggraph.h"
-#include "linesloggraph.h"
+#include "graph.h"
+#include "pointgraph.h"
+#include "bargraph.h"
+#include "linesgraph.h"
 
 class Publish;
 class Subscribe;
 class BrokerStatus;
-class LogGraph;
-class PointLogGraph;
-class BarLogGraph;
-class LinesLogGraph;
+class Graph;
+class PointGraph;
+class BarGraph;
+class LinesGraph;
 class Log;
 
 namespace Ui {
@@ -63,10 +63,10 @@ private:
     Subscribe *subscribe;
     BrokerStatus *brokerStatus;
     MosquittoAPI *mosquittoAPI;
-    LogGraph *logGraph;
-    PointLogGraph *pointLogGraph;
-    BarLogGraph *barLogGraph;
-    LinesLogGraph *linesLogGraph;
+    Graph *graph;
+    PointGraph *pointGraph;
+    BarGraph *barGraph;
+    LinesGraph *linesGraph;
     int qos;
     int payload;
     const char *_host;
@@ -79,7 +79,7 @@ private:
     void DisableComponents();
     void EnableConnectComponents();
     void DisableConnectComponents();
-    void UpdateGraph(double x, double y, LogGraph *logGraph);
+    void UpdateGraph(double x, double y, Graph *graph);
 };
 
 #endif // WINDOW_H

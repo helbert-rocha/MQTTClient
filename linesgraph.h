@@ -1,22 +1,22 @@
-#ifndef LINESLOGGRAPH_H
-#define LINESLOGGRAPH_H
+#ifndef LINESGRAPH_H
+#define LINESGRAPH_H
 #include "ui_window.h"
 #include "window.h"
-#include "loggraph.h"
-class LogGraph;
+#include "graph.h"
+class Graph;
 
 
-class LinesLogGraph : public LogGraph
+class LinesGraph : public Graph
 {
 private:
     Window *win;
 public:
-    LinesLogGraph();
-    ~LinesLogGraph();
+    LinesGraph();
+    ~LinesGraph();
     void Initialize();
     void Plot(double x, double y);
     void Clear();
     void setWindow(Window *win);
 };
 
-#endif // LINESLOGGRAPH_H
+#endif // LINESGRAPH_H

@@ -1,5 +1,5 @@
-#ifndef LOGGRAPH_H
-#define LOGGRAPH_H
+#ifndef GRAPH_H
+#define GRAPH_H
 
 #include <iostream>
 #include "qcustomplot.h"
@@ -7,7 +7,7 @@
 //#include "ui_window.h"
 //class Window;
 
-class LogGraph
+class Graph
 {
 protected:
 //   Ui::Window *ui;
@@ -17,4 +17,4 @@ public:
 //    void SetWindow(Ui::Window *_window);
 };
 
-#endif // LOGGRAPH_H
+#endif // GRAPH_H

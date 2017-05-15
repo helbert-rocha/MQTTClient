@@ -40,11 +40,11 @@ SOURCES += main.cpp\
     csvlogdao.cpp \
     jsonlogdao.cpp \
     utils.cpp \
-    loggraph.cpp \
     qcustomplot.cpp \
-    pointloggraph.cpp \
-    barloggraph.cpp \
-    linesloggraph.cpp
+    graph.cpp \
+    pointgraph.cpp \
+    bargraph.cpp \
+    linesgraph.cpp
 
 HEADERS  += window.h \
     publish.h \
@@ -63,11 +63,11 @@ HEADERS  += window.h \
     csvlogdao.h \
     jsonlogdao.h \
     utils.h \
-    loggraph.h \
     qcustomplot.h \
-    pointloggraph.h \
-    barloggraph.h \
-    linesloggraph.h
+    graph.h \
+    pointgraph.h \
+    bargraph.h \
+    linesgraph.h
 
 FORMS    += window.ui
 
