@@ -32,7 +32,6 @@ SOURCES += main.cpp\
     mosquittoapi.cpp \
     element.cpp \
     list.cpp \
-    #apisingleton.cpp
     loglist.cpp \
     log.cpp \
     logdao.cpp \
@@ -54,7 +53,6 @@ HEADERS  += window.h \
     mosquittoapi.h \
     element.h \
     list.h \
-    #apisingleton.h
     loglist.h \
     log.h \
     date.h \
