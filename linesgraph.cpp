@@ -18,7 +18,7 @@ void LinesGraph::Initialize()
     win->ui->widgetGraph3->addGraph();
     win->ui->widgetGraph3->graph(0)->setScatterStyle(QCPScatterStyle::ssDisc);
     win->ui->widgetGraph3->graph(0)->setLineStyle(QCPGraph::lsLine);
-    win->ui->widgetGraph3->xAxis->setLabel("Tempo milisegundos");
+    win->ui->widgetGraph3->xAxis->setLabel("Tempo milissegundos");
     win->ui->widgetGraph3->yAxis->setLabel("Bytes");
 }
 

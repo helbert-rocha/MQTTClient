@@ -30,7 +30,7 @@ void PointGraph::Initialize()
     win->ui->widgetGraph1->addGraph();
     win->ui->widgetGraph1->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
     win->ui->widgetGraph1->graph(0)->setLineStyle(QCPGraph::lsNone);
-    win->ui->widgetGraph1->xAxis->setLabel("Tempo milisegundos");
+    win->ui->widgetGraph1->xAxis->setLabel("Tempo milissegundos");
     win->ui->widgetGraph1->yAxis->setLabel("Bytes");
 //    ui->widgetGraph1->xAxis->setRange(0, 50);
 //    ui->widgetGraph1->yAxis->setRange(0, 50);

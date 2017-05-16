@@ -14,7 +14,7 @@ void BarGraph::Initialize()
 {
     win->ui->widgetGraph2->addGraph();
     win->bar = new QCPBars(win->ui->widgetGraph2->xAxis, win->ui->widgetGraph2->yAxis);
-    win->ui->widgetGraph2->xAxis->setLabel("Tempo milisegundos");
+    win->ui->widgetGraph2->xAxis->setLabel("Tempo milissegundos");
     win->ui->widgetGraph2->yAxis->setLabel("Bytes");
 }
 
